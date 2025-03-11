@@ -1,26 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find Yourself Game</title>
-    <script src="pixi.min.js"></script>
-    <script src="script.js" defer></script>
+    <title>Pixi.js Directional Stick Figure Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
         body {
             margin: 0;
+            padding: 0;
             overflow: hidden;
-            background: #1099bb;
+            background-color: #222;
+            touch-action: none;
         }
 
-        canvas {
+        #game-canvas {
             display: block;
+        }
+
+        #instructions {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-family: Arial, sans-serif;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 10;
         }
     </style>
 </head>
 
 <body>
+    <div id="instructions">Use WASD or long-press the screen to control the highlighted figure. Click/tap the figure to
+        win!</div>
+    <script src="pixi.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

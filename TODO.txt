@@ -1,0 +1,9 @@
+* setup git
+* proper sprite
+* even b1 is lagggy at 100 sprites :/ mb make them all sync to the same clock. mb have JS color everything at first and then reuse the same sprite
+* write the story
+
+* audio, sfx, vfx
+
+find yourself?
+which is i

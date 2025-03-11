@@ -3,6 +3,7 @@ const CHARACTERS_SPEED = 1;
 const ANIMATION_SPEED = 0.15;
 const SPRITE_WIDTH = 48;
 const SPRITE_HEIGHT = 64;
+const NUM_DECOYS = 99;
 
 const WIN = function () {
     alert("win");
@@ -103,7 +104,7 @@ window.addEventListener('touchend', handleTouchEnd);
 //HACK ===== GAME LOGIC
 // Create a class for our stick figures
 class StickFigure {
-    constructor(baseTexture, isPlayerControlled = false) {
+    constructor(isPlayerControlled = false) {
         // Create a container for the figure and its animations
         this.container = new PIXI.Container();
 
@@ -127,8 +128,6 @@ class StickFigure {
 
         // Player controlled flag
         this.isPlayerControlled = isPlayerControlled;
-
-        this.setTexture(baseTexture);
     }
 
     update() {
@@ -227,15 +226,17 @@ const base64String = function () {
 const texture = PIXI.Texture.from(base64String());
 
 // Create player-controlled figure first
-playerFigure = new StickFigure(texture.baseTexturetrue);
+playerFigure = new StickFigure(true);
+playerFigure.setTexture(texture.baseTexture);
 playerFigure.container.x = app.screen.width / 2;
 playerFigure.container.y = app.screen.height / 2;
 figures.push(playerFigure);
 app.stage.addChild(playerFigure.container);
 
 // Create 99 more regular figures
-for (let i = 0; i < 99; i++) {
-    const figure = new StickFigure(texture.baseTexture);
+for (let i = 0; i < NUM_DECOYS; i++) {
+    const figure = new StickFigure();
+    figure.setTexture(texture.baseTexture);
     figures.push(figure);
     app.stage.addChild(figure.container);
 }

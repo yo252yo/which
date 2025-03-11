@@ -1,3 +1,13 @@
+const CHANGE_DIRECTION_PROBA = 0.05;
+const CHARACTERS_SPEED = 1;
+const ANIMATION_SPEED = 0.15;
+const SPRITE_WIDTH = 48;
+const SPRITE_HEIGHT = 64;
+
+const WIN = function () {
+    alert("win");
+}
+
 
 // Create the PIXI Application
 const app = new PIXI.Application({
@@ -93,7 +103,7 @@ window.addEventListener('touchend', handleTouchEnd);
 //HACK ===== GAME LOGIC
 // Create a class for our stick figures
 class StickFigure {
-    constructor(isPlayerControlled = false) {
+    constructor(baseTexture, isPlayerControlled = false) {
         // Create a container for the figure and its animations
         this.container = new PIXI.Container();
 
@@ -104,14 +114,12 @@ class StickFigure {
         this.direction = Math.floor(Math.random() * 4);
 
         // Set slower random speed between 0.5 and 1.5
-        this.speed = 0.5 + Math.random() * 1.0;
-
+        this.speed = CHARACTERS_SPEED;
         // Random tint color
         this.tint = Math.random() * 0xFFFFFF;
 
         // Animation state
         this.frameIndex = 0;
-        this.animationSpeed = 0.1 + Math.random() * 0.1; // Random animation speed
         this.frameCounter = 0;
 
         // Create sprite
@@ -120,14 +128,7 @@ class StickFigure {
         // Player controlled flag
         this.isPlayerControlled = isPlayerControlled;
 
-        // If player controlled, add highlight
-        if (isPlayerControlled) {
-            this.highlight = new PIXI.Graphics();
-            this.highlight.beginFill(0xFFFFFF, 0.3);
-            this.highlight.drawCircle(0, 0, 40);
-            this.highlight.endFill();
-            this.container.addChild(this.highlight);
-        }
+        this.setTexture(baseTexture);
     }
 
     update() {
@@ -146,12 +147,9 @@ class StickFigure {
                 break;
         }
 
-        if (!this.isPlayerControlled) {
-            // Random direction change (1% chance)
-            if (Math.random() < 0.01) {
-                this.direction = Math.floor(Math.random() * 4);
-                this.updateAnimation();
-            }
+        if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
+            this.direction = Math.floor(Math.random() * 4);
+            this.updateAnimation();
         }
 
         // Check for screen wrap
@@ -161,7 +159,7 @@ class StickFigure {
         if (this.container.y > app.screen.height) this.container.y = 0;
 
         // Update animation frames
-        this.frameCounter += this.animationSpeed;
+        this.frameCounter += ANIMATION_SPEED;
         if (this.frameCounter >= 1) {
             this.frameCounter = 0;
             this.frameIndex = (this.frameIndex + 1) % 4; // 4 frames per animation
@@ -177,15 +175,13 @@ class StickFigure {
         let row = this.direction;
 
         // Calculate the frame rectangle
-        const frameWidth = 48;
-        const frameHeight = 64;
         const col = this.frameIndex;
 
         this.sprite.texture.frame = new PIXI.Rectangle(
-            col * frameWidth,
-            row * frameHeight,
-            frameWidth,
-            frameHeight
+            col * SPRITE_WIDTH,
+            row * SPRITE_HEIGHT,
+            SPRITE_WIDTH,
+            SPRITE_HEIGHT
         );
     }
 
@@ -193,7 +189,7 @@ class StickFigure {
         // Create the sprite with the initial frame
         const texture = new PIXI.Texture(
             baseTexture,
-            new PIXI.Rectangle(0, 0, 48, 64) // Start with first frame of down animation
+            new PIXI.Rectangle(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT) // Start with first frame of down animation
         );
 
         this.sprite = new PIXI.Sprite(texture);
@@ -203,18 +199,12 @@ class StickFigure {
         // Make sprite interactive if player controlled
         if (this.isPlayerControlled) {
             this.sprite.eventMode = 'static';
-            this.sprite.cursor = 'pointer';
             this.sprite.on('pointerdown', () => {
-                alert("win");
+                WIN();
             });
         }
 
-        // Add the sprite to the container (after highlight if it exists)
-        if (this.isPlayerControlled && this.highlight) {
-            this.container.addChildAt(this.sprite, 0);
-        } else {
-            this.container.addChild(this.sprite);
-        }
+        this.container.addChild(this.sprite);
 
         // Set initial animation frame
         this.updateAnimation();
@@ -237,8 +227,7 @@ const base64String = function () {
 const texture = PIXI.Texture.from(base64String());
 
 // Create player-controlled figure first
-playerFigure = new StickFigure(true);
-playerFigure.setTexture(texture.baseTexture);
+playerFigure = new StickFigure(texture.baseTexturetrue);
 playerFigure.container.x = app.screen.width / 2;
 playerFigure.container.y = app.screen.height / 2;
 figures.push(playerFigure);
@@ -246,8 +235,7 @@ app.stage.addChild(playerFigure.container);
 
 // Create 99 more regular figures
 for (let i = 0; i < 99; i++) {
-    const figure = new StickFigure();
-    figure.setTexture(texture.baseTexture);
+    const figure = new StickFigure(texture.baseTexture);
     figures.push(figure);
     app.stage.addChild(figure.container);
 }

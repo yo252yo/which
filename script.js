@@ -1,14 +1,15 @@
 const CHANGE_DIRECTION_PROBA = 0.05;
-const CHARACTERS_SPEED = 1;
-const ANIMATION_SPEED = 0.15;
+const PIXEL_RATIO_ADJUST = window.devicePixelRatio - 1;
+const SCREEN_SIZE_ADJUST = (window.innerWidth * window.innerHeight) / 1700000;
+const CHARACTERS_SPEED = 1 / (1 + 0.5 * PIXEL_RATIO_ADJUST);
+const ANIMATION_SPEED = 0.15 / (1 + 0.4 * PIXEL_RATIO_ADJUST);
 const SPRITE_WIDTH = 48;
 const SPRITE_HEIGHT = 64;
-const NUM_DECOYS = 99;
+const NUM_DECOYS = Math.floor(199 * Math.sqrt(SCREEN_SIZE_ADJUST));
 
 const WIN = function () {
     alert("win");
 }
-
 
 // Create the PIXI Application
 const app = new PIXI.Application({
@@ -146,11 +147,6 @@ class StickFigure {
                 break;
         }
 
-        if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
-            this.direction = Math.floor(Math.random() * 4);
-            this.updateAnimation();
-        }
-
         // Check for screen wrap
         if (this.container.x < 0) this.container.x = app.screen.width;
         if (this.container.x > app.screen.width) this.container.x = 0;
@@ -182,6 +178,11 @@ class StickFigure {
             SPRITE_WIDTH,
             SPRITE_HEIGHT
         );
+
+        if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
+            this.direction = Math.floor(Math.random() * 4);
+            this.updateAnimation();
+        }
     }
 
     setTexture(baseTexture) {

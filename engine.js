@@ -236,8 +236,6 @@ const texture = PIXI.Texture.from(base64String());
 // Create player-controlled figure first
 playerFigure = new StickFigure(true);
 playerFigure.setTexture(texture.baseTexture);
-playerFigure.container.x = app.screen.width / 2;
-playerFigure.container.y = app.screen.height / 2;
 figures.push(playerFigure);
 app.stage.addChild(playerFigure.container);
 

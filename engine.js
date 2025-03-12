@@ -116,6 +116,7 @@ class StickFigure {
         this.speed = CHARACTERS_SPEED;
         // Random tint color
         this.tint = Math.random() * 0xFFFFFF;
+        this.alpha = 1;
 
         // Animation state
         this.frameIndex = 0;
@@ -200,6 +201,7 @@ class StickFigure {
         this.sprite = new PIXI.Sprite(texture);
         this.sprite.anchor.set(0.5);
         this.sprite.tint = this.tint;
+        this.sprite.alpha = this.alpha;
 
         // Make sprite interactive if player controlled
         if (this.isPlayerControlled) {

@@ -5,17 +5,14 @@ const CHARACTERS_SPEED = 1 / (1 + 0.5 * PIXEL_RATIO_ADJUST);
 const ANIMATION_SPEED = 0.15 / (1 + 0.4 * PIXEL_RATIO_ADJUST);
 const SPRITE_WIDTH = 48;
 const SPRITE_HEIGHT = 64;
-const NUM_DECOYS = Math.floor(199 * Math.sqrt(SCREEN_SIZE_ADJUST));
+const NUM_DECOYS = Math.floor(DESIRED_DECOYS * Math.sqrt(SCREEN_SIZE_ADJUST));
 
-const WIN = function () {
-    alert("win");
-}
 
 // Create the PIXI Application
 const app = new PIXI.Application({
     width: window.innerWidth,
     height: window.innerHeight,
-    backgroundColor: 0x222222,
+    backgroundColor: BACKGROUND_COLOR,
     resolution: window.devicePixelRatio || 1,
     autoDensity: true
 });

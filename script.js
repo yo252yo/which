@@ -186,6 +186,14 @@ class StickFigure {
     }
 
     setTexture(baseTexture) {
+        if (!baseTexture.valid) {
+            console.log("Base texture not valid, waiting for it to load...");
+            baseTexture.once('loaded', () => {
+                this.setTexture(baseTexture);
+            });
+            return;
+        }
+
         // Create the sprite with the initial frame
         const texture = new PIXI.Texture(
             baseTexture,

@@ -8,6 +8,11 @@
 * black outline, mb the text needs to be in game engine =/ what if the fixed self of p5 appears behind the text
 * more interpolation?
 
+
+* first read= its obvious, second read = its so arbitrary
+
+* after the first loop, drastically expand the color options for the player
+
 find yourself?
 which is i
 

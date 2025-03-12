@@ -1,12 +1,31 @@
-* setup git
 * proper sprite
-* even b1 is lagggy at 100 sprites :/ mb make them all sync to the same clock. mb have JS color everything at first and then reuse the same sprite
-* write the story
-
+* write first draft
 * audio, sfx, vfx
+* random color generation
+* thicker outline
+* switch all french to passe simple to avoid accords participe
+
+* black outline, mb the text needs to be in game engine =/ what if the fixed self of p5 appears behind the text
+* more interpolation?
 
 find yourself?
 which is i
+
+quel est je
+
+
+
+
+add accents to french
+
+click on your self to progress
+touch your self to progress
+
+
+
+
+
+
 
 you need to stand out to be noticed
 

@@ -1,3 +1,9 @@
+// HACK ==== REQUIRED INPUT: window.REQ_
+// HACK ==== OPTIONAL INPUT: window.OPT_
+
+
+//HACK ==========================================================================================
+//HACK ===== PARAMETERS
 const CHANGE_DIRECTION_PROBA = 0.05;
 const PIXEL_RATIO_ADJUST = window.devicePixelRatio - 1;
 const SCREEN_SIZE_ADJUST = (window.innerWidth * window.innerHeight) / 1700000;
@@ -5,14 +11,20 @@ const CHARACTERS_SPEED = 1 / (1 + 0.5 * PIXEL_RATIO_ADJUST);
 const ANIMATION_SPEED = 0.15 / (1 + 0.4 * PIXEL_RATIO_ADJUST);
 const SPRITE_WIDTH = 48;
 const SPRITE_HEIGHT = 64;
-const NUM_DECOYS = Math.ceil(DESIRED_DECOYS * Math.sqrt(SCREEN_SIZE_ADJUST));
+let NUM_DECOYS = Math.ceil((window.OPT_DESIRED_DECOYS || 0) * Math.sqrt(SCREEN_SIZE_ADJUST));
 
+if (window.OPT_FIXED_DECOY) {
+    NUM_DECOYS = OPT_FIXED_DECOY;
+}
+
+//HACK ==========================================================================================
+//HACK ===== APPLICATION
 
 // Create the PIXI Application
 const app = new PIXI.Application({
     width: window.innerWidth,
     height: window.innerHeight,
-    backgroundColor: BACKGROUND_COLOR,
+    backgroundColor: window.OPT_BACKGROUND_COLOR || 0x000000,
     resolution: window.devicePixelRatio || 1,
     autoDensity: true
 });
@@ -116,8 +128,11 @@ class StickFigure {
         this.speed = CHARACTERS_SPEED;
         // Random tint color
         this.tint = Math.random() * 0xFFFFFF;
-        this.alpha = 1;
-        this.scale = 1;
+        if (isPlayerControlled && window.OPT_PLAYER_TINT) {
+            this.tint = window.OPT_PLAYER_TINT;
+        }
+        this.alpha = window.OPT_CHAR_ALPHA;
+        this.scale = window.OPT_CHAR_SCALE;
 
         // Animation state
         this.frameIndex = 0;
@@ -131,6 +146,7 @@ class StickFigure {
     }
 
     update() {
+        if (window.OPT_STOP_MOTION) return;
         switch (this.direction) {
             case 0: // Down (row 0 in spritesheet)
                 this.container.y += this.speed;
@@ -162,6 +178,7 @@ class StickFigure {
     }
 
     updateAnimation() {
+        if (window.OPT_STOP_MOTION) return;
         if (!this.sprite) return;
 
         // Get the current row based on direction
@@ -208,10 +225,17 @@ class StickFigure {
         if (this.isPlayerControlled) {
             this.sprite.eventMode = 'static';
             this.sprite.on('pointerdown', () => {
-                WIN();
+                window.REQ_WIN();
             });
         }
         this.sprite.scale.set(this.scale, this.scale);
+
+        if (window.OPT_BLUR) {
+            const blurFilter = new PIXI.filters.BlurFilter();
+            blurFilter.blur = window.OPT_BLUR;
+            this.sprite.filters = [blurFilter];
+        }
+
 
         this.container.addChild(this.sprite);
 
@@ -238,6 +262,10 @@ const texture = PIXI.Texture.from(base64String());
 // Create player-controlled figure first
 playerFigure = new StickFigure(true);
 playerFigure.setTexture(texture.baseTexture);
+if (window.OPT_PLAYER_CENTERED) {
+    playerFigure.container.x = app.screen.width / 2;
+    playerFigure.container.y = app.screen.height / 2;
+}
 figures.push(playerFigure);
 app.stage.addChild(playerFigure.container);
 

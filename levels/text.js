@@ -23,3 +23,7 @@ document.querySelectorAll(".fr, .en").forEach(el => {
         el.classList.add("hidden");
     }
 });
+
+const go = function (page) {
+    window.location = page + ".html" + window.location.search;
+}

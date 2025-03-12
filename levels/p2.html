@@ -9,21 +9,22 @@
     <script src="text.js" defer></script>
     <script>
         window.REQ_WIN = function () {
-            go("p2");
+            go("p3");
         }
         window.OPT_STOP_MOTION = true;
-        window.OPT_CHAR_ALPHA = .4;
-        window.OPT_CHAR_SCALE = 6;
-        window.OPT_BLUR = 20;
+        window.OPT_CHAR_ALPHA = .5;
+        window.OPT_CHAR_SCALE = 4;
+        window.OPT_BLUR = 10;
         window.OPT_PLAYER_TINT = 0x444444;
         window.OPT_PLAYER_CENTERED = true;
-        window.OPT_BACKGROUND_COLOR = 0x050505;
+        window.OPT_FIXED_DECOY = 1;
+        window.OPT_BACKGROUND_COLOR = 0x0A0A0A;
     </script>
 </head>
 
 <body>
-    <div class="en txt">It's hard to tell when it started. It's all fuzzy. Blurry.</div>
-    <div class="fr txt">C'est dur de savoir ou ca commenca. C'est assez flou.</div>
+    <div class="en txt">The boundaries started to shape when you encountered an Other. Mom? Dad?</div>
+    <div class="fr txt">Les limites commencerent a se former quand tu rencontras un Autre. Maman? Papa?</div>
     <div class="en txt instructions">Click on your "SELF" to continue.</div>
     <div class="fr txt instructions">Clique sur ton "MOI" pour continuer.</div>
     <script src="pixi.min.js"></script>

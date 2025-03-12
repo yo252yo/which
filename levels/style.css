@@ -1,3 +1,24 @@
 .hidden {
     display: none;
 }
+
+body {
+    background-color: black;
+    color: white;
+    font-size: xx-large;
+    overflow: hidden;
+}
+
+.instructions {
+    font-variant: small-caps;
+    font-style: italic;
+}
+
+div {
+    position: fixed;
+    z-index: 10;
+}
+
+.instructions {
+    bottom: 100px;
+}

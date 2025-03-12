@@ -7,12 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css">
     <script src="text.js" defer></script>
+    <script>
+        function handleClick(event) {
+            const target = event.target;
+            if (target === document.body || target === document.documentElement) {
+                go("p1");
+            }
+        }
+
+        document.addEventListener("click", handleClick);
+        document.addEventListener("touchend", handleClick);
+
+    </script>
 </head>
 
 <body>
-    <div class="en txt">It is said that before life starts, there is noting...</div>
-    <div class="fr txt">On dit qu'avant que commence la vie, il n'y a rien...</div>
-    <a href="p1.html">test</a>
+    <div class="en txt">In the beginning, there was no "self"</div>
+    <div class="fr txt">Au tout debut, il n'y avait pas de "moi"</div>
+
+    <div class="en txt instructions">Click on your "SELF" to continue. Since there is no "SELF", click anywhere.</div>
+    <div class="fr txt instructions">Clique sur ton "MOI" pour continuer. Comme il n'y a pas de "MOI", clique n'importe
+        ou.</div>
 </body>
 
 </html>

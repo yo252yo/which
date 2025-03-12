@@ -5,7 +5,7 @@ const CHARACTERS_SPEED = 1 / (1 + 0.5 * PIXEL_RATIO_ADJUST);
 const ANIMATION_SPEED = 0.15 / (1 + 0.4 * PIXEL_RATIO_ADJUST);
 const SPRITE_WIDTH = 48;
 const SPRITE_HEIGHT = 64;
-const NUM_DECOYS = Math.floor(DESIRED_DECOYS * Math.sqrt(SCREEN_SIZE_ADJUST));
+const NUM_DECOYS = Math.ceil(DESIRED_DECOYS * Math.sqrt(SCREEN_SIZE_ADJUST));
 
 
 // Create the PIXI Application

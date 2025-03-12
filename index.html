@@ -1,47 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Pixi.js Directional Stick Figure Demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Filte!</title>
     <style>
+        html,
         body {
             margin: 0;
             padding: 0;
+            height: 100%;
             overflow: hidden;
-            background-color: #222;
-            touch-action: none;
         }
 
-        #game-canvas {
-            display: block;
-        }
-
-        #instructions {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: white;
-            font-family: Arial, sans-serif;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 10;
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
     <script>
-        const WIN = function () {
-            alert("winamp");
-        }
-        const DESIRED_DECOYS = 199;
-        const BACKGROUND_COLOR = 0x999999;
+        // var MUSIC_AUDIO = new Audio();
+        // MUSIC_AUDIO.loop = "loop";
+        // MUSIC_AUDIO.volume = 0.4;
+
+        // MUSIC_AUDIO.src = "bgm.mp3";
+
+        // function startMusic() {
+        //     MUSIC_AUDIO.play().catch(function (error) {
+        //         setTimeout(startMusic, 100);
+        //     });
+        // }
+        // startMusic();
     </script>
 </head>
 
-<body>
-    <script src="pixi.min.js"></script>
-    <script src="engine.js"></script>
+<body style="margin: 0; padding: 0;">
+    <iframe src="levels/title.html" frameborder="0" style="width: 100%; height: 100vh; border: none;"></iframe>
 </body>
 
 </html>

@@ -117,6 +117,7 @@ class StickFigure {
         // Random tint color
         this.tint = Math.random() * 0xFFFFFF;
         this.alpha = 1;
+        this.scale = 1;
 
         // Animation state
         this.frameIndex = 0;
@@ -210,6 +211,7 @@ class StickFigure {
                 WIN();
             });
         }
+        this.sprite.scale.set(this.scale, this.scale);
 
         this.container.addChild(this.sprite);
 

@@ -24,3 +24,7 @@ div {
 .instructions {
     bottom: 100px;
 }
+
+.darktext {
+    color: black;
+}

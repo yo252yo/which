@@ -7,8 +7,8 @@
 const CHANGE_DIRECTION_PROBA = 0.05;
 const PIXEL_RATIO_ADJUST = window.devicePixelRatio - 1;
 const SCREEN_SIZE_ADJUST = (window.innerWidth * window.innerHeight) / 1700000;
-const CHARACTERS_SPEED = 1 / (1 + 0.5 * PIXEL_RATIO_ADJUST);
-const ANIMATION_SPEED = 0.15 / (1 + 0.4 * PIXEL_RATIO_ADJUST);
+const CHARACTERS_SPEED = (window.OPT_CHAR_SPEED_MOD || 1) * 1 / (1 + 0.5 * PIXEL_RATIO_ADJUST);
+const ANIMATION_SPEED = (window.OPT_ANIM_SPEED_MOD || 1) * 0.15 / (1 + 0.4 * PIXEL_RATIO_ADJUST);
 const SPRITE_WIDTH = 48;
 const SPRITE_HEIGHT = 64;
 let NUM_DECOYS = Math.ceil((window.OPT_DESIRED_DECOYS || 0) * Math.sqrt(SCREEN_SIZE_ADJUST));
@@ -36,79 +36,79 @@ window.addEventListener('resize', () => {
 });
 
 //HACK ==========================================================================================
-//HACK ===== KEYBOARD
-const keys = {};
-window.addEventListener('keydown', (e) => {
-    keys[e.key.toLowerCase()] = true;
+//HACK ===== INPUT
+if (!window.OPT_NO_INPUT) {
+    const keys = {};
+    window.addEventListener('keydown', (e) => {
+        keys[e.key.toLowerCase()] = true;
 
-    if (playerFigure) {
-        switch (e.key.toLowerCase()) {
-            case 'w': playerFigure.setDirection(3); break; // Up
-            case 'a': playerFigure.setDirection(1); break; // Left
-            case 's': playerFigure.setDirection(0); break; // Down
-            case 'd': playerFigure.setDirection(2); break; // Right
+        if (playerFigure) {
+            switch (e.key.toLowerCase()) {
+                case 'w': playerFigure.setDirection(3); break; // Up
+                case 'a': playerFigure.setDirection(1); break; // Left
+                case 's': playerFigure.setDirection(0); break; // Down
+                case 'd': playerFigure.setDirection(2); break; // Right
+            }
         }
-    }
-});
+    });
 
-window.addEventListener('keyup', (e) => {
-    keys[e.key.toLowerCase()] = false;
-});
+    window.addEventListener('keyup', (e) => {
+        keys[e.key.toLowerCase()] = false;
+    });
 
-//HACK ==========================================================================================
-//HACK ===== MOUSE/TOUCH
-let touchStartTime = 0;
-let touchStartPos = { x: 0, y: 0 };
-let isTouching = false;
-let longPressThreshold = 200; // ms
+    let touchStartTime = 0;
+    let touchStartPos = { x: 0, y: 0 };
+    let isTouching = false;
+    let longPressThreshold = 200; // ms
 
-// Set up touch/mouse controls
-function handleTouchStart(event) {
-    const eventPos = event.touches ?
-        { x: event.touches[0].clientX, y: event.touches[0].clientY } :
-        { x: event.clientX, y: event.clientY };
-
-    touchStartTime = Date.now();
-    touchStartPos = eventPos;
-    isTouching = true;
-}
-
-function handleTouchMove(event) {
-    if (!isTouching || !playerFigure) return;
-
-    const currentTime = Date.now();
-    if (currentTime - touchStartTime >= longPressThreshold) {
+    // Set up touch/mouse controls
+    function handleTouchStart(event) {
         const eventPos = event.touches ?
             { x: event.touches[0].clientX, y: event.touches[0].clientY } :
             { x: event.clientX, y: event.clientY };
 
-        // Calculate direction based on the difference between current and start position
-        const dx = eventPos.x - touchStartPos.x;
-        const dy = eventPos.y - touchStartPos.y;
+        touchStartTime = Date.now();
+        touchStartPos = eventPos;
+        isTouching = true;
+    }
 
-        // Determine primary direction (the one with larger magnitude)
-        if (Math.abs(dx) > Math.abs(dy)) {
-            // Horizontal movement is primary
-            playerFigure.setDirection(dx > 0 ? 2 : 1); // Right or Left
-        } else {
-            // Vertical movement is primary
-            playerFigure.setDirection(dy > 0 ? 0 : 3); // Down or Up
+    function handleTouchMove(event) {
+        if (!isTouching || !playerFigure) return;
+
+        const currentTime = Date.now();
+        if (currentTime - touchStartTime >= longPressThreshold) {
+            const eventPos = event.touches ?
+                { x: event.touches[0].clientX, y: event.touches[0].clientY } :
+                { x: event.clientX, y: event.clientY };
+
+            // Calculate direction based on the difference between current and start position
+            const dx = eventPos.x - touchStartPos.x;
+            const dy = eventPos.y - touchStartPos.y;
+
+            // Determine primary direction (the one with larger magnitude)
+            if (Math.abs(dx) > Math.abs(dy)) {
+                // Horizontal movement is primary
+                playerFigure.setDirection(dx > 0 ? 2 : 1); // Right or Left
+            } else {
+                // Vertical movement is primary
+                playerFigure.setDirection(dy > 0 ? 0 : 3); // Down or Up
+            }
         }
     }
+
+    function handleTouchEnd() {
+        isTouching = false;
+    }
+
+    // Add touch/mouse event listeners
+    window.addEventListener('mousedown', handleTouchStart);
+    window.addEventListener('mousemove', handleTouchMove);
+    window.addEventListener('mouseup', handleTouchEnd);
+
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
 }
-
-function handleTouchEnd() {
-    isTouching = false;
-}
-
-// Add touch/mouse event listeners
-window.addEventListener('mousedown', handleTouchStart);
-window.addEventListener('mousemove', handleTouchMove);
-window.addEventListener('mouseup', handleTouchEnd);
-
-window.addEventListener('touchstart', handleTouchStart);
-window.addEventListener('touchmove', handleTouchMove);
-window.addEventListener('touchend', handleTouchEnd);
 
 //HACK ==========================================================================================
 //HACK ===== GAME LOGIC

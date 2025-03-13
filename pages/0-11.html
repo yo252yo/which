@@ -9,23 +9,25 @@
     <script src="../text.js" defer></script>
     <script>
         window.REQ_WIN = function () {
-            go("0-6");
+            go("0-12");
         }
-
-        window.OPT_CHAR_SCALE = 1.3;
+        window.OPT_CHAR_ALPHA = .4;
+        window.OPT_CHAR_SCALE = 6;
+        window.OPT_BLUR = 20;
         window.OPT_PLAYER_TINT = 0x444444;
-        window.OPT_FIXED_DECOY = 4;
-        window.OPT_BACKGROUND_COLOR = 0x555555;
+        window.OPT_PLAYER_CENTERED = true;
+        window.OPT_NO_INPUT = true;
+        window.OPT_BACKGROUND_COLOR = 0x0A0A0A;
 
-        window.OPT_CHAR_SPEED_MOD = 1.0;
-        window.OPT_ANIM_SPEED_MOD = 1.0;
+        window.OPT_CHAR_SPEED_MOD = 0.2;
+        window.OPT_ANIM_SPEED_MOD = 0.3;
     </script>
 </head>
 
 <body>
-    <div class="en txt">As your world grew bigger, you slowly grew to find that you were not the center of it.</div>
-    <div class="fr txt">A mesure que ton monde grandit, tu compris petit a petit que tu n'en etais pas le centre.
-    </div>
+    <div class="en txt">It appeared quickly that the world was not static. Time was passing. Things were moving.</div>
+    <div class="fr txt">Il apparut rapidement que le monde n'etait pas statique. Le temps passait. Des choses
+        bougeaient.</div>
     <div class="en txt instructions">Click on your "SELF" to continue.</div>
     <div class="fr txt instructions">Clique sur ton "MOI" pour continuer.</div>
     <script src="../pixi.min.js"></script>

@@ -6,7 +6,7 @@
 * switch all french to passe simple to avoid accords participe
 * what if the fixed self of p5 appears behind the text
 * more interpolation?
-
+* prevent decoys from forming near the center when theres a center character
 
 * first read= its obvious, second read = its so arbitrary
 

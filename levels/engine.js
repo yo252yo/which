@@ -131,8 +131,8 @@ class StickFigure {
         if (isPlayerControlled && window.OPT_PLAYER_TINT) {
             this.tint = window.OPT_PLAYER_TINT;
         }
-        this.alpha = window.OPT_CHAR_ALPHA;
-        this.scale = window.OPT_CHAR_SCALE;
+        this.alpha = window.OPT_CHAR_ALPHA || 1;
+        this.scale = window.OPT_CHAR_SCALE || 1;
 
         // Animation state
         this.frameIndex = 0;

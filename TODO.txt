@@ -4,8 +4,7 @@
 * random color generation
 * thicker outline
 * switch all french to passe simple to avoid accords participe
-
-* black outline, mb the text needs to be in game engine =/ what if the fixed self of p5 appears behind the text
+* what if the fixed self of p5 appears behind the text
 * more interpolation?
 
 
@@ -28,7 +27,12 @@ touch your self to progress
 
 
 
+Mb transition : in fact the world was more full than you ever imaginer
 
+
+And everything was moving 
+
+Mb introduce movement earlier?
 
 
 

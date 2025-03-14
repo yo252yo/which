@@ -15,10 +15,9 @@
         <p>
             <a href="0.html?lang=en">Start in ENGLISH</a><br />
             <a href="0.html?lang=fr">Commencer en FRANÇAIS</a><br />
-
-            credits<br />
-            music volume<br />
-            sfx volume<br />
+        </p>
+        <p>
+            Music volume: <input type="range" id="slider" min="0" max="100" value="0">
         </p>
         <p id="cheat_checkbox"></p>
         <p style="font-size: x-small;font-style: italic;">A game by <a href="https://www.yo252yo.com"
@@ -26,6 +25,7 @@
             music from <a href="https://loyaltyfreakmusic.com/" target="_blank">Rrrrrose Azerty</a></p>
 
         <script>
+            // CHEAT MODE
             if (localStorage.getItem("tried")) {
                 // Create checkbox
                 const checkbox = document.createElement("input");
@@ -50,16 +50,23 @@
             }
 
 
+            // CONTINUE
             if (localStorage.getItem("maxPage")) {
                 document.getElementById("continue").innerHTML = `
                 <a href="${localStorage.getItem("maxPage")}.html${localStorage.getItem("locationSearch")}">CONTINUE (page ${localStorage.getItem("maxPage")})</a>
                 `;
 
             }
-            //
-            localStorage.setItem("locationSearch", window.location.search);
 
-            const maxPage = localStorage.getItem("maxPage");
+
+            // AUDIO
+            const slider = document.getElementById('slider');
+            slider.addEventListener('input', function () {
+                if (window.parent) {
+                    window.parent.changeMusicVolume(slider.value);
+                }
+            });
+            slider.value = Math.floor(100 * window.parent.MUSIC_AUDIO.volume);
 
         </script>
     </div>

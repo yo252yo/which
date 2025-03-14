@@ -18,7 +18,7 @@
 
 # OTHER
 * write first draft
-* audio volume, sfx, vfx
+* sfx, vfx
 * jump to page
 
 

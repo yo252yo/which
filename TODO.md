@@ -21,9 +21,10 @@
 * write first draft
 * audio volume, sfx, vfx
 * detect faster swipes
-* back button 
-* Page counter it's just good manners 
 * Bookmark / go to page
+
+
+#HACK ==================================================================
 
 # IDEATION
 

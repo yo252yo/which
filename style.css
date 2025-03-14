@@ -12,21 +12,39 @@ body {
     font-family: 'Quicksand';
 }
 
-.instructions {
-    font-variant: small-caps;
-    font-style: italic;
-}
-
 div {
     position: fixed;
     z-index: 10;
     margin: 20px;
 
-    pointer-events: none;
+}
+
+#navigation {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    width: 80px;
+    height: 18px;
+    font-size: small;
+    color: black;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    opacity: 0.7;
 }
 
 .instructions {
+    font-variant: small-caps;
+    font-style: italic;
     bottom: 50px;
+    pointer-events: none;
+}
+
+.txt {
+    top: 50px;
+    pointer-events: none;
 }
 
 .darktext {

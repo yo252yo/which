@@ -1,3 +1,5 @@
+const TOTAL_PAGES = 13;
+
 document.addEventListener("DOMContentLoaded", function () {
     const params = window.location.search; // Get current URL query parameters
     if (params) {
@@ -27,3 +29,21 @@ document.querySelectorAll(".fr, .en").forEach(el => {
 const go = function (page) {
     window.location = page + ".html" + window.location.search;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const match = window.location.pathname.match(/(\d+)\.html$/);
+    if (match) {
+        const n = parseInt(match[1], 10);
+        const navDiv = document.createElement("div");
+        navDiv.id = "navigation";
+
+        const destination = n ? (n - 1) : "title";
+
+        navDiv.innerHTML = `
+            <a href="${destination}.html" style="text-decoration: none;">&lt;-</a>
+            ${n} / ${TOTAL_PAGES}
+        `;
+
+        document.body.appendChild(navDiv);
+    }
+});

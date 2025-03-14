@@ -63,7 +63,7 @@ if (!window.OPT_NO_INPUT) {
     let touchStartTime = 0;
     let touchStartPos = { x: 0, y: 0 };
     let isTouching = false;
-    let longPressThreshold = 200; // ms
+    let longPressThreshold = 50; // ms
 
     // Set up touch/mouse controls
     function handleTouchStart(event) {

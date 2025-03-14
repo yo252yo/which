@@ -20,7 +20,6 @@
 * write first draft
 * audio volume, sfx, vfx
 * jump to page
-* detect faster swipes
 
 
 #HACK ==================================================================

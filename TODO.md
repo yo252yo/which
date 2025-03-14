@@ -17,11 +17,10 @@
 
 
 # OTHER
-* cheat mode for proofreading
 * write first draft
 * audio volume, sfx, vfx
+* jump to page
 * detect faster swipes
-* Bookmark / go to page
 
 
 #HACK ==================================================================

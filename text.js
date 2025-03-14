@@ -28,6 +28,7 @@ document.querySelectorAll(".fr, .en").forEach(el => {
 
 const go = function (page) {
     window.location = page + ".html" + window.location.search;
+    localStorage.setItem("locationSearch", window.location.search);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -41,9 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         navDiv.innerHTML = `
             <a href="${destination}.html" style="text-decoration: none;">&lt;-</a>
-            ${n} / ${TOTAL_PAGES}
+            ${n + 1} / ${TOTAL_PAGES + 1}
         `;
 
         document.body.appendChild(navDiv);
+
+        const maxPage = localStorage.getItem("maxPage");
+        localStorage.setItem("maxPage", Math.max(maxPage, n));
     }
 });

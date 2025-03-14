@@ -147,6 +147,14 @@ class StickFigure {
 
         // Player controlled flag
         this.isPlayerControlled = isPlayerControlled;
+
+        if (isPlayerControlled && localStorage.getItem("cheat") == "true") {
+            this.highlight = new PIXI.Graphics();
+            this.highlight.beginFill(0x44FFFF, 0.2);
+            this.highlight.drawCircle(0, 0, Math.floor(40 * this.scale));
+            this.highlight.endFill();
+            this.container.addChild(this.highlight);
+        }
     }
 
     update() {

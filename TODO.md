@@ -20,9 +20,7 @@
 * cheat mode for proofreading
 * write first draft
 * audio volume, sfx, vfx
-* dont forget to add accents to french
 * detect faster swipes
-* WASD for azerty
 * back button 
 * Page counter it's just good manners 
 * Bookmark / go to page

@@ -20,10 +20,13 @@ body {
 div {
     position: fixed;
     z-index: 10;
+    margin: 20px;
+
+    pointer-events: none;
 }
 
 .instructions {
-    bottom: 100px;
+    bottom: 50px;
 }
 
 .darktext {

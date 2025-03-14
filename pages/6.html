@@ -9,18 +9,24 @@
     <script src="../text.js" defer></script>
     <script>
         window.REQ_WIN = function () {
-            go("0-7");
+            go("7");
         }
+        window.OPT_CHAR_ALPHA = .6;
+        window.OPT_CHAR_SCALE = 4;
+        window.OPT_BLUR = 10;
+        window.OPT_PLAYER_TINT = 0x444444;
+        window.OPT_PLAYER_CENTERED = true;
+        window.OPT_FIXED_DECOY = 1;
+        window.OPT_BACKGROUND_COLOR = 0x2A2A2A;
 
-        window.OPT_CHAR_SCALE = 1.1;
-        window.OPT_FIXED_DECOY = 5;
-        window.OPT_BACKGROUND_COLOR = 0x666666;
+        window.OPT_CHAR_SPEED_MOD = 0.7;
+        window.OPT_ANIM_SPEED_MOD = 0.65;
     </script>
 </head>
 
 <body>
-    <div class="en txt">Seeing the world change around you, you found yourself changing too.</div>
-    <div class="fr txt">Voyant le monde changer autour de toi, tu changeas egalement.</div>
+    <div class="en txt">The boundaries started to take shape when you encountered an Other. Mom? Dad?</div>
+    <div class="fr txt">Les limites commençèrent à se former quand tu rencontras un Autre. Maman? Papa?</div>
     <div class="en txt instructions">Click on your "SELF" to continue.</div>
     <div class="fr txt instructions">Clique sur ton "MOI" pour continuer.</div>
     <script src="../pixi.min.js"></script>

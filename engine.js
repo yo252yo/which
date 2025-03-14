@@ -44,8 +44,12 @@ if (!window.OPT_NO_INPUT) {
 
         if (playerFigure) {
             switch (e.key.toLowerCase()) {
+                // Normal
                 case 'w': playerFigure.setDirection(3); break; // Up
                 case 'a': playerFigure.setDirection(1); break; // Left
+                // French =/
+                case 'z': playerFigure.setDirection(3); break; // Up
+                case 'q': playerFigure.setDirection(1); break; // Left
                 case 's': playerFigure.setDirection(0); break; // Down
                 case 'd': playerFigure.setDirection(2); break; // Right
             }

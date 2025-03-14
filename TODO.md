@@ -1,3 +1,5 @@
+
+
 # SPRITE WORK
 * proper sprite
 * thicker outline
@@ -17,16 +19,13 @@
 # OTHER
 * cheat mode for proofreading
 * write first draft
-* audio, sfx, vfx
+* audio volume, sfx, vfx
 * dont forget to add accents to french
 * detect faster swipes
 * WASD for azerty
 * back button 
-
-# SOUNDTRACK
->>> https://chezmonplaisir.bandcamp.com/track/the-space-is-big
-https://chezmonplaisir.bandcamp.com/track/need-to-find-peace-somewhere
-https://chezmonplaisir.bandcamp.com/track/the-space-is-mysterious
+* Page counter it's just good manners 
+* Bookmark / go to page
 
 # IDEATION
 

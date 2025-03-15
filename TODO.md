@@ -15,11 +15,38 @@
 * what if the fixed self of p5 appears behind the text
 * prevent decoys from forming near the center when theres a center character
 
-
 # OTHER
 * write first draft
 * sfx, vfx
 * jump to page
+* better index apples, or skip apples sometimes
+
+
+#HACK ==================================================================
+ I need a second type of entity, to represent object. Mb just emoji. And everyone would be interested in one in particular.
+
+Mb click at the right time, when the object is close by 
+
+It's a packman collecting mechanism. Pacman 
+
+ Emoji flag, emoji leisure 
+
+
+  Does it end by "you can't fill your hole? 
+  Car tu peux pas tout contenir car tes frontières sont poreuses et tu finit par te dissoudre 
+
+  Every realisation made you feel more insignificant, more arbitrary. Your borders were porous 
+
+  Makes you feel like a tiny dot on a vast tapestry of all other experiences to experience? 
+
+  Stripped of all you "have" you're down to what you "are" the I, and it's shared by everyonr
+
+
+Everyone gets a dot, zoom in, fade to black
+
+ Big crowd at the end after pacman sequence, lower the size of silhouettes 
+
+ Et de plus en plus rapide 
 
 
 #HACK ==================================================================

@@ -12,6 +12,8 @@ const ANIMATION_SPEED = (window.OPT_ANIM_SPEED_MOD || 1) * 0.15 / (1 + 0.4 * PIX
 const SPRITE_WIDTH = 48;
 const SPRITE_HEIGHT = 64;
 let NUM_DECOYS = Math.ceil((window.OPT_DESIRED_DECOYS || 0) * Math.sqrt(SCREEN_SIZE_ADJUST));
+let NUM_APPLES = Math.ceil((window.OPT_DESIRED_APPLES || 0) * Math.sqrt(SCREEN_SIZE_ADJUST));
+let APPLES = window.OPT_POSSIBLE_APPLES || ['🍎'];
 
 if (window.OPT_FIXED_DECOY) {
     NUM_DECOYS = OPT_FIXED_DECOY;
@@ -155,6 +157,11 @@ class StickFigure {
             this.highlight.endFill();
             this.container.addChild(this.highlight);
         }
+
+        // const border = new PIXI.Graphics();
+        // border.lineStyle(2, 0xff0000, 1); // Red border
+        // border.drawRect(-SPRITE_WIDTH / 2, -SPRITE_HEIGHT / 2, SPRITE_WIDTH, SPRITE_HEIGHT);
+        // this.container.addChild(border);
     }
 
     update() {
@@ -187,6 +194,16 @@ class StickFigure {
             this.frameIndex = (this.frameIndex + 1) % 4; // 4 frames per animation
             this.updateAnimation();
         }
+
+        apples.forEach((apple, index) => {
+            // Assume playerFigure.container and apple have 'getBounds()' methods:
+            const playerBounds = this.container.getBounds();
+            if (hitTestRectangle(playerBounds, apple.getBounds())) {
+                app.stage.removeChild(apple);
+                apples.splice(index, 1);
+                spawnApples(1);
+            }
+        });
     }
 
     updateAnimation() {
@@ -261,8 +278,20 @@ class StickFigure {
     }
 }
 
+function hitTestRectangle(player, apple) {
+    var player_margin = player.width * .3;
+    return (
+        player.x + player_margin < apple.x + apple.width &&
+        player.x + player.width - player_margin > apple.x &&
+        player.y < apple.y + apple.height &&
+        player.y + player.height > apple.y
+    );
+}
+
+
 // Array to store all stick figures
 const figures = [];
+const apples = [];
 let playerFigure;
 
 const base64String = function () {
@@ -288,6 +317,23 @@ for (let i = 0; i < NUM_DECOYS; i++) {
     figures.push(figure);
     app.stage.addChild(figure.container);
 }
+
+function spawnApples(count) {
+    for (let i = 0; i < count; i++) {
+        const apple = new PIXI.Text(APPLES[Math.floor(Math.random() * APPLES.length)], { fontSize: 36 });
+        apple.x = Math.random() * (app.screen.width - apple.width);
+        apple.y = Math.random() * (app.screen.height - apple.height);
+        apples.push(apple);
+        app.stage.addChild(apple);
+
+        // const border = new PIXI.Graphics();
+        // border.lineStyle(2, 0xff0000, 1);
+        // border.drawRect(0, 0, apple.width, apple.height);
+        // apple.addChild(border);
+    }
+}
+
+spawnApples(NUM_APPLES);
 
 //HACK ==========================================================================================
 //HACK ===== GAME LOOP

@@ -185,6 +185,11 @@ class StickFigure {
         this.alpha = window.OPT_CHAR_ALPHA || 1;
         this.scale = window.OPT_CHAR_SCALE || 1;
 
+        if (window.OPT_AGING && !isPlayerControlled) {
+            this.aging_phase = Math.random() > 0.5 ? -1 : 1;
+            this.alpha = Math.random();
+        }
+
         // Animation state
         this.frameIndex = 0;
         this.frameCounter = 0;
@@ -272,6 +277,27 @@ class StickFigure {
         if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
             this.direction = Math.floor(Math.random() * 4);
             this.updateAnimation();
+        }
+
+        if (window.OPT_AGING && !this.isPlayerControlled) {
+            var AGING_SPEED = 0.05;
+            this.alpha += this.aging_phase * AGING_SPEED * Math.random();
+
+            if (this.alpha > 1) {
+                this.alpha = 1;
+                this.aging_phase = -1;
+            }
+            if (this.alpha < 0) {
+                this.alpha = 0;
+                this.aging_phase = 1;
+
+                this.container.x = Math.random() * app.screen.width;
+                this.container.y = Math.random() * app.screen.height;
+
+                this.tint = generateRGBColor(this.isPlayerControlled, window.OPT_COLOR_CONSTRAIN_FACTOR);
+            }
+            this.sprite.alpha = this.alpha;
+            this.sprite.tint = this.tint;
         }
     }
 

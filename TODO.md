@@ -19,7 +19,9 @@
 * write first draft
 * sfx, vfx
 * jump to page
-* better index apples, or skip apples sometimes
+* better index apples, or skip apples sometimes (mb some levels only the player can eat???)
+* Make emoticon apples twinge left right like oldy game 
+
 
 
 #HACK ==================================================================
@@ -48,10 +50,20 @@ Everyone gets a dot, zoom in, fade to black
 
  Et de plus en plus rapide 
 
+Match someone's movement? Adopt an other rpov 
+
+ mb it ends as you consuming everyone's experiences until you grow too big?
+
+celebrer payer attention aux autres mb ??
 
 #HACK ==================================================================
 
 # IDEATION
+
+https://adventuretime.fandom.com/wiki/Food_Chain
+>> traditional representation embrace death as a part of life, id rather transcend it as nonsensical to begin with, but then what constructs the continuity of self well nothing its an illusion so ofc its brittle but also that means its fluid it can reshape and when you die when this game ends  the next game just takes nother form youknow but equating it iin a loop is a bit misdirecting because that hints that the next existence is on the same level as the one before and they are different phases but in fact i wanna put the stress on the CONTINUITY along every dimension both in space but most importantly in time, 
+the core of this prject is that your thick lines are absurd, things are continuous, so obviously in space within the game but also and mb more importantly in time
+
 
 - why am i me and not him
 - which one am i

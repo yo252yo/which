@@ -41,8 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const destination = n ? (n - 1) : "title";
 
         navDiv.innerHTML = `
-            <a href="${destination}.html" style="text-decoration: none;">&lt;-</a>
+            <a href="${destination}.html" style="text-decoration: none;" title="back">⏪</a>
             ${n + 1} / ${TOTAL_PAGES + 1}
+            <a href="title.html" style="text-decoration: none;" title="home">🏠</a>
         `;
 
         document.body.appendChild(navDiv);

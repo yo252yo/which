@@ -256,7 +256,15 @@ class StickFigure {
 
                 if (this.isPlayerControlled) {
                     if (window.OPT_REQUIRED_APPLES) {
-                        this.eaten_apples.push(apple.text);
+                        if (!window.OPT_MATCHING_APPLES) {
+                            if (!window.OPT_DISTINCT_APPLES) {
+                                this.eaten_apples.push(apple.text);
+                            } else if (!this.eaten_apples.includes(apple.text)) {
+                                this.eaten_apples.push(apple.text);
+                            }
+                        } else if (this.eaten_apples.length == 0 || apple.text == this.eaten_apples[0]) {
+                            this.eaten_apples.push(apple.text);
+                        }
 
                         if (this.eaten_apples.length > window.OPT_REQUIRED_APPLES) {
                             this.eaten_apples.shift();
@@ -462,9 +470,8 @@ function refresh_apple_counter(eaten_apples) {
     for (var a of eaten_apples) {
         appleDiv.innerText += `${a} `
     }
-    var missing = Math.max(0, window.OPT_REQUIRED_APPLES - appleDiv.length);
+    var missing = Math.max(0, window.OPT_REQUIRED_APPLES - eaten_apples.length);
     appleDiv.innerText += "_ ".repeat(missing);
-
 }
 
 //HACK ==========================================================================================

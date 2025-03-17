@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Which is I</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../style.css">
+    <script src="../text.js" defer></script>
+    <script>
+        window.REQ_WIN = function () {
+            go("22");
+        }
+
+        window.OPT_DESIRED_DECOYS = 70;
+        window.OPT_BACKGROUND_COLOR = 0xFFFFFF;
+        window.OPT_AGING = true;
+
+        window.OPT_DESIRED_APPLES = 60;
+        window.OPT_POSSIBLE_APPLES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+            'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+        window.OPT_REQUIRED_APPLES = 5;
+    </script>
+</head>
+
+<body>
+    <div class="en darktext txt">"Why do I think what I think? How do I know what I know?"</div>
+    <div class="fr darktext txt">"Pourquoi je penses ce que je penses? Comment je sais ce que je sais?"</div>
+    <div class="en darktext instructions">Pick up 5 letters and click on your "SELF" to continue.</div>
+    <div class="fr darktext instructions">Ramasse 5 lettres puis clique sur ton "MOI" pour continuer.</div>
+    <script src="../pixi.min.js"></script>
+    <script src="../engine.js"></script>
+</body>
+
+</html>

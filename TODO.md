@@ -13,19 +13,10 @@
 
 
 # PAGES
-- And then you find yourself asking why am i now instead of some other time… people come and go: why am i now instead of some other time? Why is it now rather than any time?
-- flag
-- leisure
-- mood
-- color
-
 - crowd movement (small bird flock mechanism): who do i follow
 - then you find yourself inlfuencing people: where does me stop (mb towards ending?) special level where you control people in the shape of a body?? or mb its the end, you start to lose your mind
 Why am I one thing instead of many? Mb in gameplay you draw a boundary 
 
-interpretation? 
-morality?      ♻️🌲🏭🔋🚰💰🏦🏚️📉👩‍🏭⚖️✊🏳️‍🌈🚔🗳️🏥💉🍎🧠🚭🎓🏫📖💻🏛️🔬🧬🚀🛰️🤖🔌🕊️☮️🏳️🌍⚔️🤝     👍👎💔
-how do i know?
 why is there something rather than nothing?
 
 # ENDING

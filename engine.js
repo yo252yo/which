@@ -161,7 +161,19 @@ class StickFigure {
         this.container.x = Math.random() * app.screen.width;
         this.container.y = Math.random() * app.screen.height;
 
+        if (window.OPT_PLAYER_CENTERED) {
+            while (Math.abs(this.container.x / app.screen.width - 0.5) < 0.1) {
+                this.container.x = Math.random() * app.screen.width;
+            }
+            while (Math.abs(this.container.y / app.screen.height - 0.5) < 0.1) {
+                this.container.y = Math.random() * app.screen.height;
+            }
+        }
+
         this.direction = Math.floor(Math.random() * 4);
+        if (window.OPT_FIXED_DIRECTION && isPlayerControlled) {
+            this.direction = window.OPT_FIXED_DIRECTION;
+        }
 
         // Set slower random speed between 0.5 and 1.5
         this.speed = CHARACTERS_SPEED;

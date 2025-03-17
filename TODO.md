@@ -4,12 +4,6 @@
 * proper sprite
 * thicker outline
 
-# TUTORIALIZING
-* lock direction for page 0-11
-* can i mb keep the other moving but very far in the sequence 0-1X
-* what if the fixed self of p5 appears behind the text
-* prevent decoys from forming near the center when theres a center character
-
 # OTHER
 * write first draft
 * sfx, vfx

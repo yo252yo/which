@@ -26,28 +26,28 @@
 
         <script>
             // CHEAT MODE
-            if (localStorage.getItem("tried")) {
-                // Create checkbox
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.id = "cheatToggle";
-                checkbox.checked = localStorage.getItem("cheat") === "true";
+            //if (localStorage.getItem("tried")) {
+            // Create checkbox
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = "cheatToggle";
+            checkbox.checked = localStorage.getItem("cheat") === "true";
 
-                // Create label
-                const label = document.createElement("label");
-                label.htmlFor = "cheatToggle";
-                label.textContent = "Narrative mode (highlights targets for easy find)";
+            // Create label
+            const label = document.createElement("label");
+            label.htmlFor = "cheatToggle";
+            label.textContent = "Narrative mode (highlights what you have to find)";
 
-                // Toggle localStorage value on change
-                checkbox.addEventListener("change", function () {
-                    localStorage.setItem("cheat", checkbox.checked ? "true" : "false");
-                });
+            // Toggle localStorage value on change
+            checkbox.addEventListener("change", function () {
+                localStorage.setItem("cheat", checkbox.checked ? "true" : "false");
+            });
 
-                // Append elements to body
-                const container = document.getElementById("cheat_checkbox");
-                container.appendChild(checkbox);
-                container.appendChild(label);
-            }
+            // Append elements to body
+            const container = document.getElementById("cheat_checkbox");
+            container.appendChild(checkbox);
+            container.appendChild(label);
+            //}
 
 
             // CONTINUE

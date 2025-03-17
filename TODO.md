@@ -16,8 +16,6 @@
 * jump to page
 * better index apples, or skip apples sometimes (mb some levels only the player can eat???)
 * Make emoticon apples twinge left right like oldy game 
-* limited change of color could be better
-
 
 
 #HACK ==================================================================
@@ -51,6 +49,16 @@ Match someone's movement? Adopt an other rpov
  mb it ends as you consuming everyone's experiences until you grow too big?
 
 celebrer payer attention aux autres mb ??
+
+And then you find yourself asking why am i now instead of some other time…
+> mb gameplayment parlant you pick any of your same color?
+Why am i this emotion?
+Why do i like this?
+Why is this right? 
+Why is this interpretation?
+
+How do i know? 
+
 
 #HACK ==================================================================
 

@@ -118,48 +118,34 @@ if (!window.OPT_NO_INPUT) {
 
 //HACK ==========================================================================================
 //HACK ===== GAME LOGIC
-function generateRGBColor(dark = false, scalingFactor = 1) {
+function generateRGBColor(isPlayer = false, scalingFactor = 1) {
     let r, g, b;
 
+    var playerDefaultColor = 68;
     let rng = function () {
-        if (dark) {
-            return (scalingFactor * Math.random())
-        }
-        else {
-            return ((1 - scalingFactor) + scalingFactor * Math.random())
+        if (Math.random() < playerDefaultColor / 256) { // we decrease
+            if (isPlayer) {
+                return playerDefaultColor * (1 - scalingFactor * Math.random());
+            }
+            else {
+                var boundary = playerDefaultColor * (1 - scalingFactor);
+                return boundary * Math.random() * scalingFactor; // multiplication by * scalingFactor to increase contrast with NPCs
+            }
+        } else { // we increase
+            var boundary = playerDefaultColor * (1 + scalingFactor);
+            if (isPlayer) {
+                return playerDefaultColor + (boundary - playerDefaultColor) * Math.random();
+            }
+            else {
+                return 256 - scalingFactor * (256 - boundary) * Math.random(); // multiplication by * scalingFactor to increase contrast with NPCs
+            }
+
         }
     }
 
-
-
-    r = Math.floor(rng() * 256);
-    g = Math.floor(rng() * 256);
-    b = Math.floor(rng() * 256);
-
-    // if (avoidGray) {
-    //     // Method 1: Generate colors with channel variation
-    //     // This creates colors where the difference between channels is significant
-    //     r = Math.floor(Math.random() * 256);
-    //     g = Math.floor(Math.random() * 256);
-    //     b = Math.floor(Math.random() * 256);
-
-    //     // Ensure the color isn't too gray by checking channel differences
-    //     const maxDiff = Math.max(Math.abs(r - g), Math.abs(r - b), Math.abs(g - b));
-
-    //     // If the maximum difference between any two channels is small, regenerate
-    //     if (maxDiff < 60) {
-    //         return generateRGBColor(true); // Recursively try again
-    //     }
-    // } else {
-    //     // Method 2: Generate colors that are more grayish
-    //     // Choose a base gray value and add small variations
-    //     const baseGray = Math.floor(Math.random() * 256);
-    //     const variation = 20; // Amount of variation from perfect gray
-
-    //     r = Math.max(0, Math.min(255, baseGray + (Math.random() * variation * 2) - variation));
-    //     g = Math.max(0, Math.min(255, baseGray + (Math.random() * variation * 2) - variation));
-    //     b = Math.max(0, Math.min(255, baseGray + (Math.random() * variation * 2) - variation));
-    // }
+    r = Math.floor(rng());
+    g = Math.floor(rng());
+    b = Math.floor(rng());
 
     // Combine into a single hex value for Pixi.js tint
     return (r << 16) + (g << 8) + b;

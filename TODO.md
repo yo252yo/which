@@ -4,11 +4,6 @@
 * proper sprite
 * thicker outline
 
-# COLOR RNG
-* full spectrum
-* limit change in the tutorial
-* 0-6 LIMITED change of color
-
 # TUTORIALIZING
 * lock direction for page 0-11
 * can i mb keep the other moving but very far in the sequence 0-1X
@@ -21,6 +16,7 @@
 * jump to page
 * better index apples, or skip apples sometimes (mb some levels only the player can eat???)
 * Make emoticon apples twinge left right like oldy game 
+* limited change of color could be better
 
 
 

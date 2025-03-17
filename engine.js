@@ -371,6 +371,12 @@ function spawnApples(count) {
         apples.push(apple);
         app.stage.addChild(apple);
 
+        apple.anchor.set(0.5); // Set anchor point to center for better rotation
+        apple.rotation = Math.PI / 8;
+        if (Math.random() < 0.5) {
+            apple.rotation *= -1;
+        }
+
         // const border = new PIXI.Graphics();
         // border.lineStyle(2, 0xff0000, 1);
         // border.drawRect(0, 0, apple.width, apple.height);
@@ -379,6 +385,20 @@ function spawnApples(count) {
 }
 
 spawnApples(NUM_APPLES);
+
+if (NUM_APPLES) {
+    var lastFlip = 0;
+    app.ticker.add(() => {
+        const timestamp = Date.now();
+        if (timestamp - lastFlip > 750) {
+            for (let i = 0; i < apples.length; i++) {
+                apples[i].rotation *= -1;
+            }
+            lastFlip = timestamp;
+        }
+    });
+}
+
 
 //HACK ==========================================================================================
 //HACK ===== GAME LOOP

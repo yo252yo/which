@@ -208,6 +208,7 @@ class StickFigure {
             this.container.addChild(this.highlight);
         }
 
+        this.eaten_apples = [];
         // const border = new PIXI.Graphics();
         // border.lineStyle(2, 0xff0000, 1); // Red border
         // border.drawRect(-SPRITE_WIDTH / 2, -SPRITE_HEIGHT / 2, SPRITE_WIDTH, SPRITE_HEIGHT);
@@ -252,6 +253,17 @@ class StickFigure {
                 app.stage.removeChild(apple);
                 apples.splice(index, 1);
                 spawnApples(1);
+
+                if (this.isPlayerControlled) {
+                    if (window.OPT_REQUIRED_APPLES) {
+                        this.eaten_apples.push(apple.text);
+
+                        if (this.eaten_apples.length > window.OPT_REQUIRED_APPLES) {
+                            this.eaten_apples.shift();
+                        }
+                        refresh_apple_counter(this.eaten_apples);
+                    }
+                }
             }
         });
     }
@@ -325,7 +337,13 @@ class StickFigure {
         if (this.isPlayerControlled) {
             this.sprite.eventMode = 'static';
             this.sprite.on('pointerdown', () => {
-                window.REQ_WIN();
+                if (!window.OPT_REQUIRED_APPLES) {
+                    window.REQ_WIN();
+                } else {
+                    if (this.eaten_apples.length >= window.OPT_REQUIRED_APPLES) {
+                        window.REQ_WIN();
+                    }
+                }
             });
         }
         this.sprite.scale.set(this.scale, this.scale);
@@ -389,6 +407,9 @@ for (let i = 0; i < NUM_DECOYS; i++) {
     app.stage.addChild(figure.container);
 }
 
+//HACK ==========================================================================================
+//HACK ===== APPLES
+
 function spawnApples(count) {
     for (let i = 0; i < count; i++) {
         const apple = new PIXI.Text(APPLES[Math.floor(Math.random() * APPLES.length)], { fontSize: 36 });
@@ -425,6 +446,26 @@ if (NUM_APPLES) {
     });
 }
 
+if (window.OPT_REQUIRED_APPLES) {
+    const appleDiv = document.createElement("div");
+    appleDiv.id = "apple_counter";
+    document.body.appendChild(appleDiv);
+    appleDiv.innerText = "_ ".repeat(window.OPT_REQUIRED_APPLES);
+}
+
+function refresh_apple_counter(eaten_apples) {
+    var appleDiv = document.getElementById("apple_counter");
+    if (!appleDiv) {
+        return;
+    }
+    appleDiv.innerText = "";
+    for (var a of eaten_apples) {
+        appleDiv.innerText += `${a} `
+    }
+    var missing = Math.max(0, window.OPT_REQUIRED_APPLES - appleDiv.length);
+    appleDiv.innerText += "_ ".repeat(missing);
+
+}
 
 //HACK ==========================================================================================
 //HACK ===== GAME LOOP

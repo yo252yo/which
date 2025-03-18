@@ -151,6 +151,8 @@ function generateRGBColor(isPlayer = false, scalingFactor = 1) {
     return (r << 16) + (g << 8) + b;
 }
 
+const FLOCKS = {};
+
 // Create a class for our stick figures
 class StickFigure {
     constructor(isPlayerControlled = false) {
@@ -246,12 +248,12 @@ class StickFigure {
             this.updateAnimation();
         }
 
-        apples.forEach((apple, index) => {
+        // Apple eating logic
+        ALL_APPLES.forEach((apple, index) => {
             // Assume playerFigure.container and apple have 'getBounds()' methods:
-            const playerBounds = this.container.getBounds();
-            if (hitTestRectangle(playerBounds, apple.getBounds())) {
+            if (hitTestRectangle(this.container.getBounds(), apple.getBounds())) {
                 app.stage.removeChild(apple);
-                apples.splice(index, 1);
+                ALL_APPLES.splice(index, 1);
                 spawnApples(1);
 
                 if (this.isPlayerControlled) {
@@ -274,6 +276,41 @@ class StickFigure {
                 }
             }
         });
+
+        // Flocking logic
+        if (window.OPT_FLOCKING) {
+            if (this.flock) {
+                return;
+            }
+
+            ALL_FIGURES.forEach((figure, index) => {
+                if (figure == this) {
+                    return;
+                }
+
+                if (hitTestRectangle(this.container.getBounds(), figure.container.getBounds())) {
+                    if (!figure.flock) {
+                        const new_flock = Object.keys(FLOCKS).length;
+                        this.flock = new_flock;
+                        figure.flock = new_flock;
+
+                        const avg_tint = (this.tint + figure.tint) / 2;
+                        this.tint = avg_tint;
+                        figure.tint = avg_tint;
+                        this.sprite.tint = avg_tint;
+                        figure.sprite.tint = avg_tint;
+
+                        FLOCKS[new_flock] = this.direction;
+                        figure.direction = this.direction;
+                    } else {
+                        this.flock = figure.flock;
+                        this.tint = figure.tint;
+                        this.sprite.tint = figure.tint;
+                        this.direction = figure.direction;
+                    }
+                }
+            });
+        }
     }
 
     updateAnimation() {
@@ -294,7 +331,7 @@ class StickFigure {
             SPRITE_HEIGHT
         );
 
-        if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
+        if (!window.OPT_FLOCKING && !this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
             this.direction = Math.floor(Math.random() * 4);
             this.updateAnimation();
         }
@@ -387,8 +424,8 @@ function hitTestRectangle(player, apple) {
 
 
 // Array to store all stick figures
-const figures = [];
-const apples = [];
+const ALL_FIGURES = [];
+const ALL_APPLES = [];
 let playerFigure;
 
 const base64String = function () {
@@ -397,6 +434,9 @@ const base64String = function () {
 
 const texture = PIXI.Texture.from(base64String());
 
+//HACK ==========================================================================================
+//HACK ===== FIGURES
+
 // Create player-controlled figure first
 playerFigure = new StickFigure(true);
 playerFigure.setTexture(texture.baseTexture);
@@ -404,16 +444,19 @@ if (window.OPT_PLAYER_CENTERED) {
     playerFigure.container.x = app.screen.width / 2;
     playerFigure.container.y = app.screen.height / 2;
 }
-figures.push(playerFigure);
+ALL_FIGURES.push(playerFigure);
 app.stage.addChild(playerFigure.container);
 
 // Create 99 more regular figures
 for (let i = 0; i < NUM_DECOYS; i++) {
     const figure = new StickFigure();
     figure.setTexture(texture.baseTexture);
-    figures.push(figure);
+    ALL_FIGURES.push(figure);
     app.stage.addChild(figure.container);
 }
+app.ticker.add(() => {
+    ALL_FIGURES.forEach(figure => figure.update());
+});
 
 //HACK ==========================================================================================
 //HACK ===== APPLES
@@ -423,7 +466,7 @@ function spawnApples(count) {
         const apple = new PIXI.Text(APPLES[Math.floor(Math.random() * APPLES.length)], { fontSize: 36 });
         apple.x = Math.random() * (app.screen.width - apple.width);
         apple.y = Math.random() * (app.screen.height - apple.height);
-        apples.push(apple);
+        ALL_APPLES.push(apple);
         app.stage.addChild(apple);
 
         apple.anchor.set(0.5); // Set anchor point to center for better rotation
@@ -446,8 +489,8 @@ if (NUM_APPLES) {
     app.ticker.add(() => {
         const timestamp = Date.now();
         if (timestamp - lastFlip > 750) {
-            for (let i = 0; i < apples.length; i++) {
-                apples[i].rotation *= -1;
+            for (let i = 0; i < ALL_APPLES.length; i++) {
+                ALL_APPLES[i].rotation *= -1;
             }
             lastFlip = timestamp;
         }
@@ -473,11 +516,3 @@ function refresh_apple_counter(eaten_apples) {
     var missing = Math.max(0, window.OPT_REQUIRED_APPLES - eaten_apples.length);
     appleDiv.innerText += "_ ".repeat(missing);
 }
-
-//HACK ==========================================================================================
-//HACK ===== GAME LOOP
-
-// Start the game loop
-app.ticker.add(() => {
-    figures.forEach(figure => figure.update());
-});

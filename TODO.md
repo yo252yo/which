@@ -1,3 +1,10 @@
+FLOCKING WIP:
+- right now theres no direction change when a flock is formed
+- flocks dont merge
+- flocks dont lose people
+- what about the player's flock
+
+
 
 
 # SPRITE WORK
@@ -22,7 +29,7 @@ why is there something rather than nothing?
 # ENDING
 Does it end by "you can't fill your hole? Car tu peux pas tout contenir car tes frontières sont poreuses et tu finit par te dissoudre 
 Big crowd at the end after pacman sequence, lower the size of silhouettes, Everyone gets a dot, zoom in, fade to black
-Every realisation made you feel more insignificant, more arbitrary. Your borders were porous 
+Your borders were porous 
 Makes you feel like a tiny dot on a vast tapestry of all other experiences to experience? 
 Stripped of all you "have" you're down to what you "are" the I, and it's shared by everyonr
 mb it ends as you consuming everyone's experiences until you grow too big?

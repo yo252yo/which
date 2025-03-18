@@ -239,14 +239,32 @@ class StickFigure {
         });
     }
 
-    handleFlocking() {
-        if (!window.OPT_FLOCKING) {
-            return;
-        }
-        if (this.flock || this.isPlayerControlled) {
-            return;
-        }
+    handleFlockingDissent() {
+        const FLOCK_LEAVING_PROBA = 0.0002;
+        const MIN_FLOCK_SIZE = 2;
 
+        var flock_array = FLOCKS[this.flock];
+        if (flock_array && flock_array.length > MIN_FLOCK_SIZE && Math.random() < FLOCK_LEAVING_PROBA) {
+            this.tint = generateRGBColor(this.isPlayerControlled, window.OPT_COLOR_CONSTRAIN_FACTOR);
+            this.sprite.tint = this.tint;
+
+            switch (this.direction) {
+                case 0: this.direction = 3; break;
+                case 1: this.direction = 2; break;
+                case 2: this.direction = 1; break;
+                default: this.direction = 0;
+            }
+
+            delete this.flock;
+            this.flock_cooldown = 1;
+            const index = flock_array.indexOf(this);
+            if (index !== -1) {
+                flock_array.splice(index, 1);
+            }
+        }
+    }
+
+    handleFlockingCollision() {
         ALL_FIGURES.forEach((figure, index) => {
             if (figure == this || figure.isPlayerControlled) {
                 return;
@@ -255,6 +273,8 @@ class StickFigure {
             if (hitTestRectangle(this.container.getBounds(), figure.container.getBounds())) {
                 if (!figure.flock) {
                     const new_flock = Object.keys(FLOCKS).length;
+                    FLOCKS[new_flock] = [this, figure];
+
                     this.flock = new_flock;
                     figure.flock = new_flock;
 
@@ -264,7 +284,6 @@ class StickFigure {
                     this.sprite.tint = avg_tint;
                     figure.sprite.tint = avg_tint;
 
-                    FLOCKS[new_flock] = [this, figure];
                     figure.direction = this.direction;
                 } else {
                     this.flock = figure.flock;
@@ -275,7 +294,29 @@ class StickFigure {
                 }
             }
         });
+    }
 
+    handleFlocking() {
+        if (!window.OPT_FLOCKING) {
+            return;
+        }
+        if (this.isPlayerControlled) {
+            return;
+        }
+        const FLOCK_COOLDOWN_AFTER_LEAVING = 100;
+        if (this.flock_cooldown) {
+            this.flock_cooldown++;
+            if (this.flock_cooldown > FLOCK_COOLDOWN_AFTER_LEAVING) {
+                delete this.flock_cooldown;
+            }
+            return;
+        }
+        if (this.flock) {
+            this.handleFlockingDissent();
+            return;
+        }
+        // We are eligible, not in a flock or on cooldown
+        this.handleFlockingCollision();
     }
 
     update() {
@@ -340,7 +381,7 @@ class StickFigure {
 
     changeDirection() {
         if (window.OPT_FLOCKING && this.flock) {
-            if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA / FLOCKS[this.flock].length) {
+            if (!this.isPlayerControlled && Math.random() < 0.5 * CHANGE_DIRECTION_PROBA / FLOCKS[this.flock].length) {
                 this.direction = Math.floor(Math.random() * 4);
                 for (var f of FLOCKS[this.flock]) {
                     f.direction = this.direction;
@@ -456,7 +497,6 @@ function hitTestRectangle(player, apple) {
         player.y + player.height > apple.y
     );
 }
-
 
 // Array to store all stick figures
 const ALL_FIGURES = [];

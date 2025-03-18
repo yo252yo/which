@@ -1,10 +1,3 @@
-FLOCKING WIP:
-- flocks dont merge
-- flocks dont lose people
-- what about the player's flock
-
-
-
 
 # SPRITE WORK
 * proper sprite

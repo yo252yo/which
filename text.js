@@ -48,7 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         document.body.appendChild(navDiv);
 
-        const maxPage = localStorage.getItem("maxPage");
-        localStorage.setItem("maxPage", Math.max(maxPage, n));
+        // const maxPage = localStorage.getItem("maxPage");
+        // localStorage.setItem("maxPage", Math.max(maxPage, n));
+        localStorage.setItem("maxPage", n);
     }
 });

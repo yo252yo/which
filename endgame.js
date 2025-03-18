@@ -1,18 +1,6 @@
 // Colorful Random Dots Animation using PIXI.js
 // This version is optimized for performance with many particles
 
-// Configuration Parameters
-const ENDGAME_CONFIG = {
-    particleCount: 100,
-    backgroundColor: 0x000000,
-    moveSpeed: 1,
-    blurForce: 5,
-    directionChangeProbability: 0.02,
-    keyForceFraction: 0.1,
-    particleSize: 10,
-    particleAlpha: 0.8
-};
-
 // Create a PIXI Application
 const app = new PIXI.Application({
     width: window.innerWidth,
@@ -47,6 +35,14 @@ const particles = [];
 // Create main container for particles (NOT using ParticleContainer for better filter support)
 const mainContainer = new PIXI.Container();
 app.stage.addChild(mainContainer);
+
+if (window.OPT_ENDING_EASY_WIN) {
+    app.stage.interactive = true;
+
+    app.stage.on('pointerdown', (event) => {
+        window.REQ_WIN();
+    });
+}
 
 // Create dot texture (more efficient than drawing each frame)
 function createDotTexture() {

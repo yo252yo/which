@@ -265,10 +265,12 @@ class StickFigure {
             if (index !== -1) {
                 flock_array.splice(index, 1);
             }
+            return true;
         }
+        return false;
     }
 
-    handleFlockingCollision() {
+    handleFlockingCollision(isInFlock) {
         if (this.isPlayerControlled && !window.OPT_PLAYER_FLOCKING) {
             return;
         }
@@ -281,8 +283,9 @@ class StickFigure {
                 return;
             }
 
+            // this.flock might be true
             if (hitTestRectangle(this.container.getBounds(), figure.container.getBounds())) {
-                if (!figure.flock) {
+                if (!figure.flock && !this.flock) {
                     const new_flock = Object.keys(FLOCKS).length;
                     FLOCKS[new_flock] = [this, figure];
 
@@ -296,12 +299,34 @@ class StickFigure {
                     figure.sprite.tint = avg_tint;
 
                     figure.direction = this.direction;
-                } else {
+                } else if (!this.flock) {
                     this.flock = figure.flock;
                     this.tint = figure.tint;
                     this.sprite.tint = figure.tint;
                     this.direction = figure.direction;
                     FLOCKS[figure.flock].push(this);
+                } else if (!figure.flock) {
+                    figure.flock = this.flock;
+                    figure.tint = this.tint;
+                    figure.sprite.tint = this.tint;
+                    figure.direction = this.direction;
+                    FLOCKS[figure.flock].push(figure);
+                } else if (figure.flock != PLAYER_FIGURE.flock) {
+                    var PROBA_FLOCK_MERGE = 0.0001;
+                    if (this.isPlayerControlled) {
+                        PROBA_FLOCK_MERGE += window.OPT_PLAYER_EXTRA_FLOCK_MERGE;
+                    }
+
+                    if (Math.random() < PROBA_FLOCK_MERGE) {
+                        var target_flock = FLOCKS[figure.flock];
+                        for (var f of target_flock) {
+                            //f.tint = this.tint;
+                            //f.sprite.tint = this.tint;
+                            //f.direction = this.direction;
+                            delete f.flock;
+                        }
+                        delete FLOCKS[figure.flock];
+                    }
                 }
             }
         });
@@ -320,8 +345,9 @@ class StickFigure {
             return;
         }
         if (this.flock) {
-            this.handleFlockingDissent();
-            return;
+            if (this.handleFlockingDissent()) {
+                return;
+            }
         }
         // We are eligible, not in a flock or on cooldown
         this.handleFlockingCollision();
@@ -391,7 +417,7 @@ class StickFigure {
         if (window.OPT_FLOCKING && this.flock) {
             var flock_inertia_factor = 0.5;
             if (this.flock == PLAYER_FIGURE.flock) {
-                flock_inertia_factor = 0.1;
+                flock_inertia_factor = 0.01;
             }
 
             if (Math.random() < flock_inertia_factor * CHANGE_DIRECTION_PROBA / FLOCKS[this.flock].length) {

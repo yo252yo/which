@@ -1,5 +1,5 @@
-* merging mechanism for flocks, keeps the tint. as it is, 27+ is impossible. 26-28 progression.
-* p30+ needs a new engine optimiing (canvas based apparently)
+* p29: needs cluttering and singlign out of one dot
+* p32: need to check for epilepsy
 
 * new game + color picker
 * sfx on found, mb vfx too?

@@ -12,25 +12,25 @@
             go("31");
         }
 
-        window.OPT_DESIRED_DECOYS = 800;
-        window.OPT_BACKGROUND_COLOR = 0x888888;
-        window.OPT_CHAR_SCALE = 0.6;
-        window.OPT_BLUR = 5;
 
-        window.OPT_CHAR_SPEED_MOD = 8;
-
-        window.OPT_FLOCKING = true;
-        window.OPT_PLAYER_FLOCKING = true;
-        window.OPT_STOP_ANIM = true;
-        window.OPT_ENDING_EASY_WIN = true;
+        const ENDGAME_CONFIG = {
+            particleCount: 1000,
+            backgroundColor: 0x999999,
+            moveSpeed: 4,
+            blurForce: 6,
+            directionChangeProbability: 0.01,
+            keyForceFraction: 0.6,
+            particleSize: 8,
+            particleAlpha: 0.6
+        };
     </script>
 </head>
 
 <body>
     <div class="en lighttext txt">After all, seen from far enough, all there is is a myriad of colorful dots, all unique
-        and
-        arbitrary, on the vast tapestry of all experiences.</div>
-    <div class="fr lighttext txt"></div>
+        and arbitrary, on the vast tapestry of all experiences.</div>
+    <div class="fr lighttext txt">Après tout, avec un point de vue assez large, tout n'est qu'une myriade de points
+        colorés, tous aussi uniques qu'arbitraire, dansant sur la large tapisserie de la vie.</div>
     <div class="en lighttext instructions">Click on any "SELF" in your group to progress. If your group is wide enough,
         click on
         any "SELF".</div>
@@ -38,7 +38,7 @@
         suffisament vaste,
         clique sur n'importe quel "MOI".</div>
     <script src="../pixi.min.js"></script>
-    <script src="../game.js"></script>
+    <script src="../endgame.js"></script>
 </body>
 
 </html>

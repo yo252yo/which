@@ -1,6 +1,6 @@
 * merging mechanism for flocks, keeps the tint. as it is, 27+ is impossible. 26-28 progression.
 * p30+ needs a new engine optimiing (canvas based apparently)
-* i think i have to invert colors, we start white dive black come back white
+
 * new game + color picker
 * sfx on found, mb vfx too?
 

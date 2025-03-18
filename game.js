@@ -121,7 +121,7 @@ if (!window.OPT_NO_INPUT) {
 function generateRGBColor(isPlayer = false, scalingFactor = 1) {
     let r, g, b;
 
-    var playerDefaultColor = 68;
+    var playerDefaultColor = 102;
     let rng = function () {
         if (Math.random() < playerDefaultColor / 256) { // we decrease
             if (isPlayer) {
@@ -582,6 +582,7 @@ app.ticker.add(() => {
 function spawnApples(count) {
     for (let i = 0; i < count; i++) {
         const apple = new PIXI.Text(APPLES[Math.floor(Math.random() * APPLES.length)], { fontSize: 36 });
+        apple.style.fill = 0xFFFFFF;
         apple.x = Math.random() * (app.screen.width - apple.width);
         apple.y = Math.random() * (app.screen.height - apple.height);
         ALL_APPLES.push(apple);

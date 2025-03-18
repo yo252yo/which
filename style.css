@@ -3,8 +3,8 @@
 }
 
 body {
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
     font-size: xx-large;
     overflow: hidden;
     margin: 0;
@@ -16,7 +16,6 @@ div {
     position: fixed;
     z-index: 10;
     margin: 20px;
-
 }
 
 #navigation {
@@ -65,7 +64,17 @@ div {
 }
 
 .darktext {
+    color: white;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.lighttext {
     color: black;
+    font-weight: bold;
+    background-color: rgba(256, 256, 256, 0.2);
+    border-radius: 3px;
 }
 
 /* quicksand-regular - latin */

@@ -1,4 +1,4 @@
-const TOTAL_PAGES = 13;
+const LAST_PAGE = 22;
 
 document.addEventListener("DOMContentLoaded", function () {
     const params = window.location.search; // Get current URL query parameters
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         navDiv.innerHTML = `
             <a href="${destination}.html" style="text-decoration: none;" title="back">⏪</a>
-            ${n + 1} / ${TOTAL_PAGES + 1}
+            ${n} / ${LAST_PAGE}
             <a href="title.html" style="text-decoration: none;" title="home">🏠</a>
         `;
 

@@ -47,13 +47,13 @@
 
         function start(page) {
             if (!page) {
-                page = "0";
+                page = "1";
             }
             location.href = page + ".html?lang=" + LANG;
         }
         function jump() {
             var p = prompt("Page?");
-            start(parseInt(p) - 1);
+            start(p);
         }
     </script>
 </head>
@@ -97,7 +97,7 @@
             var page = parseInt(localStorage.getItem("maxPage"));
             document.getElementById("continue").innerHTML = `
                 <a href="#" onClick="start(${page});">
-                    <span id="continueText">> </span> (page ${page + 1})
+                    <span id="continueText">> </span> (page ${page})
                 </a>
                 `;
             document.getElementById("jump").innerHTML = `

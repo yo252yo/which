@@ -8,26 +8,27 @@
     <link rel="stylesheet" href="../style.css">
     <script src="../text.js" defer></script>
     <script>
-        window.REQ_WIN = function () {
-            go("2");
+        function handleClick(event) {
+            const target = event.target;
+            if (target === document.body || target === document.documentElement) {
+                go("2");
+            }
         }
-        window.OPT_STOP_MOTION = true;
-        window.OPT_CHAR_ALPHA = .4;
-        window.OPT_CHAR_SCALE = 6;
-        window.OPT_BLUR = 20;
-        window.OPT_PLAYER_TINT = 0x444444;
-        window.OPT_PLAYER_CENTERED = true;
-        window.OPT_BACKGROUND_COLOR = 0x050505;
+
+        document.addEventListener("click", handleClick);
+        document.addEventListener("touchend", handleClick);
+
+        localStorage.setItem("tried", "true");
     </script>
 </head>
 
 <body>
-    <div class="en txt">It's hard to tell when it started. It's all fuzzy. Blurry.</div>
-    <div class="fr txt">C'est dur de savoir où ça commença. C'est assez flou.</div>
-    <div class="en instructions">Click on your "SELF" to continue.</div>
-    <div class="fr instructions">Clique sur ton "MOI" pour continuer.</div>
-    <script src="../pixi.min.js"></script>
-    <script src="../engine.js"></script>
+    <div class="en txt">In the beginning, there was no "self".</div>
+    <div class="fr txt">Au tout debut, il n'y avait pas de "moi".</div>
+
+    <div class="en instructions">Click on your "SELF" to continue. Since there is no "SELF", click anywhere.</div>
+    <div class="fr instructions">Clique sur ton "MOI" pour continuer. Comme il n'y a pas de "MOI", clique n'importe
+        ou.</div>
 </body>
 
 </html>

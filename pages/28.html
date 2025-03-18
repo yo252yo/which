@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Which is I</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../style.css">
+    <script src="../text.js" defer></script>
+    <script>
+        window.REQ_WIN = function () {
+            go("29");
+        }
+
+        window.OPT_DESIRED_DECOYS = 300;
+        window.OPT_BACKGROUND_COLOR = 0x777777;
+        window.OPT_CHAR_SCALE = 0.5;
+        window.OPT_CHAR_ALPHA = 0.5;
+        window.OPT_BLUR = 1.5;
+        window.OPT_CHAR_SPEED_MOD = 2;
+        window.OPT_ANIM_SPEED_MOD = 1.5;
+
+        window.OPT_FLOCKING = true;
+        window.OPT_PLAYER_FLOCKING = true;
+    </script>
+</head>
+
+<body>
+    <div class="en txt">"Where does my "self" end? Does it end?"</div>
+    <div class="fr txt">"Où s'arrête mon moi? S'arrête-t'il?"</div>
+    <div class="en instructions">Click on any "SELF" in your group to progress.</div>
+    <div class="fr instructions">Clique sur un "MOI" de ton groupe pour progresser.</div>
+    <script src="../pixi.min.js"></script>
+    <script src="../engine.js"></script>
+</body>
+
+</html>

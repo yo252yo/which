@@ -413,6 +413,7 @@ class StickFigure {
     updateAnimation() {
         if (window.OPT_STOP_MOTION) return;
         if (!this.sprite) return;
+        if (window.OPT_STOP_ANIM) return;
 
         // Get the current row based on direction
         // 0=down, 1=left, 2=right, 3=up corresponds to the spritesheet rows
@@ -450,7 +451,7 @@ class StickFigure {
     setFlockingWinCondition() {
         this.sprite.eventMode = 'static';
         this.sprite.on('pointerdown', () => {
-            if (this.isPlayerControlled) {
+            if (this.isPlayerControlled || window.OPT_ENDING_EASY_WIN) {
                 window.REQ_WIN();
             } else if (this.flock == PLAYER_FIGURE.flock) {
                 window.REQ_WIN();

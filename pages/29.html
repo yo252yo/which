@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Which is I</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../style.css">
+    <script src="../text.js" defer></script>
+    <script>
+        window.REQ_WIN = function () {
+            go("30");
+        }
+
+        window.OPT_DESIRED_DECOYS = 600;
+        window.OPT_BACKGROUND_COLOR = 0x555555;
+        window.OPT_CHAR_SCALE = 0.4;
+        window.OPT_CHAR_ALPHA = 1.0;
+        window.OPT_BLUR = 4;
+
+        window.OPT_CHAR_SPEED_MOD = 5;
+
+        window.OPT_FLOCKING = true;
+        window.OPT_PLAYER_FLOCKING = true;
+        window.OPT_STOP_ANIM = true;
+        window.OPT_ENDING_EASY_WIN = true;
+    </script>
+</head>
+
+<body>
+    <div class="en txt">"Why am I one instead of many?"</div>
+    <div class="fr txt">"Pourquoi suis-je un plutôt que plusieurs?"</div>
+    <div class="en instructions">Click on any "SELF" in your group to progress. If your group is wide enough, click on
+        any "SELF".</div>
+    <div class="fr instructions">Clique sur un "MOI" de ton groupe pour progresser. Si ton groupe est suffisament vaste,
+        clique sur n'importe quel "MOI".</div>
+    <script src="../pixi.min.js"></script>
+    <script src="../engine.js"></script>
+</body>
+
+</html>

@@ -300,13 +300,14 @@ class StickFigure {
                         this.sprite.tint = avg_tint;
                         figure.sprite.tint = avg_tint;
 
-                        FLOCKS[new_flock] = this.direction;
+                        FLOCKS[new_flock] = [this, figure];
                         figure.direction = this.direction;
                     } else {
                         this.flock = figure.flock;
                         this.tint = figure.tint;
                         this.sprite.tint = figure.tint;
                         this.direction = figure.direction;
+                        FLOCKS[figure.flock].push(this);
                     }
                 }
             });
@@ -331,9 +332,20 @@ class StickFigure {
             SPRITE_HEIGHT
         );
 
-        if (!window.OPT_FLOCKING && !this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
-            this.direction = Math.floor(Math.random() * 4);
-            this.updateAnimation();
+        if (window.OPT_FLOCKING && this.flock) {
+            if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA / FLOCKS[this.flock].length) {
+                this.direction = Math.floor(Math.random() * 4);
+                for (var f of FLOCKS[this.flock]) {
+                    f.direction = this.direction;
+                }
+                this.updateAnimation();
+            }
+        } else {
+            // normal direction change
+            if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
+                this.direction = Math.floor(Math.random() * 4);
+                this.updateAnimation();
+            }
         }
 
         if (window.OPT_AGING && !this.isPlayerControlled) {

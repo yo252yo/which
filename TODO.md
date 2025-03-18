@@ -1,5 +1,4 @@
 FLOCKING WIP:
-- right now theres no direction change when a flock is formed
 - flocks dont merge
 - flocks dont lose people
 - what about the player's flock

@@ -279,12 +279,12 @@ class StickFigure {
 
         // Flocking logic
         if (window.OPT_FLOCKING) {
-            if (this.flock) {
+            if (this.flock || this.isPlayerControlled) {
                 return;
             }
 
             ALL_FIGURES.forEach((figure, index) => {
-                if (figure == this) {
+                if (figure == this || figure.isPlayerControlled) {
                     return;
                 }
 

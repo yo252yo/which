@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Which is I</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../style.css">
+    <script src="../text.js"></script>
+</head>
+
+<body>
+    <div>
+        <p id="continue"></p>
+        <p>
+            <a href="0.html?lang=en">Start in ENGLISH</a><br />
+            <a href="0.html?lang=fr">Commencer en FRANÇAIS</a><br />
+        </p>
+        <p>
+            Music volume: <input type="range" id="slider" min="0" max="100" value="0">
+        </p>
+        <p id="cheat_checkbox"></p>
+        <p style="font-size: x-small;font-style: italic;">A game by <a href="https://www.yo252yo.com"
+                target="_blank">yo252yo</a> with
+            music from <a href="https://loyaltyfreakmusic.com/" target="_blank">Rrrrrose Azerty</a></p>
+
+        <script>
+            // CHEAT MODE
+            //if (localStorage.getItem("tried")) {
+            // Create checkbox
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = "cheatToggle";
+            checkbox.checked = localStorage.getItem("cheat") === "true";
+
+            // Create label
+            const label = document.createElement("label");
+            label.htmlFor = "cheatToggle";
+            label.textContent = "Narrative mode (highlights what you have to find)";
+
+            // Toggle localStorage value on change
+            checkbox.addEventListener("change", function () {
+                localStorage.setItem("cheat", checkbox.checked ? "true" : "false");
+            });
+
+            // Append elements to body
+            const container = document.getElementById("cheat_checkbox");
+            container.appendChild(checkbox);
+            container.appendChild(label);
+            //}
+
+
+            // CONTINUE
+            if (localStorage.getItem("maxPage")) {
+                document.getElementById("continue").innerHTML = `
+                <a href="${localStorage.getItem("maxPage")}.html${localStorage.getItem("locationSearch")}">CONTINUE (page ${localStorage.getItem("maxPage")})</a>
+                `;
+
+            }
+
+
+            // AUDIO
+            const slider = document.getElementById('slider');
+            slider.addEventListener('input', function () {
+                if (window.parent) {
+                    window.parent.changeMusicVolume(slider.value);
+                }
+            });
+            slider.value = Math.floor(100 * window.parent.MUSIC_AUDIO.volume);
+
+        </script>
+    </div>
+</body>
+
+</html>

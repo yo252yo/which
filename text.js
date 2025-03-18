@@ -18,7 +18,10 @@ function getQueryParam(name) {
     return urlParams.get(name);
 }
 
-const lang = getQueryParam("lang") || "en";
+let lang = getQueryParam("lang") || "en";
+if (!(["fr", "en"].includes(lang))) {
+    lang = "en";
+}
 
 document.querySelectorAll(".fr, .en").forEach(el => {
     if (!el.classList.contains(lang)) {
@@ -28,7 +31,6 @@ document.querySelectorAll(".fr, .en").forEach(el => {
 
 const go = function (page) {
     window.location = page + ".html" + window.location.search;
-    localStorage.setItem("locationSearch", window.location.search);
 }
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -6,10 +6,10 @@
 
 # OTHER
 * write first draft
-* sfx, vfx
-* jump to page
+* sfx on found, mb vfx too?
 * better index apples, or skip apples sometimes (mb some levels only the player can eat???)
 * new game + color picker
+* mb align the page numbers on file names :(
 
 
 # PAGES

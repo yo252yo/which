@@ -1,28 +1,29 @@
 // Colorful Random Dots Animation using PIXI.js
 // This version is optimized for performance with many particles
 
+// Configuration Parameters
+const ENDGAME_CONFIG = {
+    particleCount: 100,
+    backgroundColor: 0x000000,
+    moveSpeed: 1,
+    blurForce: 5,
+    directionChangeProbability: 0.02,
+    keyForceFraction: 0.1,
+    particleSize: 10,
+    particleAlpha: 0.8
+};
+
 // Create a PIXI Application
 const app = new PIXI.Application({
     width: window.innerWidth,
     height: window.innerHeight,
-    backgroundColor: 0x000000,
+    backgroundColor: ENDGAME_CONFIG.backgroundColor,
     resolution: window.devicePixelRatio || 1,
     autoDensity: true,
     antialias: false
 });
 document.body.appendChild(app.view);
 
-// Configuration Parameters
-const ENDGAME_CONFIG = {
-    particleCount: 10000,       // Number of dots
-    backgroundColor: 0x000000, // Background color
-    moveSpeed: 10,              // Base movement speed
-    blurForce: 5,              // Blur amount (0-10)
-    directionChangeProbability: 0.05, // Probability of changing direction
-    keyForceFraction: 0.3,     // Fraction of dots affected by key press
-    particleSize: 3,           // Fixed particle size
-    particleAlpha: 0.8         // Particle opacity (0-1)
-};
 
 // Direction constants (only 4 directions)
 const DIRECTIONS = [
@@ -85,13 +86,20 @@ function init() {
         // Store extra data
         particle.direction = dirIndex;
         particle.speed = ENDGAME_CONFIG.moveSpeed;
-        particle.forcedDirection = null;
 
         // Add to container
         mainContainer.addChild(particle);
 
         // Add to tracking array
         particles.push(particle);
+
+
+        particle.interactive = true;
+        particle.on('pointerdown', () => {
+            if (window.REQ_WIN) {
+                window.REQ_WIN();
+            }
+        });
     }
 
     // Apply blur
@@ -106,12 +114,9 @@ function updateParticles(delta) {
         // Random direction change
         if (Math.random() < ENDGAME_CONFIG.directionChangeProbability) {
             p.direction = Math.floor(Math.random() * 4);
-            p.forcedDirection = null;
         }
 
-        // Get current direction
-        let dirIndex = p.forcedDirection !== null ? p.forcedDirection : p.direction;
-        const dir = DIRECTIONS[dirIndex];
+        const dir = DIRECTIONS[p.direction];
 
         // Update position
         p.x += dir.vx * p.speed * delta;
@@ -142,63 +147,94 @@ function updateBlur() {
 
 // Main game loop
 function gameLoop(delta) {
-    processKeys();
     updateParticles(delta);
 }
 
-// Initialize and start
-function start() {
-    init();
-    setupEventListeners();
-    app.ticker.add(gameLoop);
-}
-start();
+
+init();
+app.ticker.add(gameLoop);
+
+//const keys = {};
+window.addEventListener('keydown', (e) => {
+    keys[e.key.toLowerCase()] = true;
+
+    switch (e.key.toLowerCase()) {
+        // Normal
+        case 'w': applyDirection(0); break; // Up
+        case 'a': applyDirection(3); break; // Left
+        // French =/
+        case 'z': applyDirection(0); break; // Up
+        case 'q': applyDirection(3); break; // Left
+        case 's': applyDirection(2); break; // Down
+        case 'd': applyDirection(1); break; // Right
+    }
+});
 
 
-// Setup event listeners
-function setupEventListeners() {
-    // Keyboard events
-    window.addEventListener('keydown', (e) => {
-        switch (e.key.toLowerCase()) {
-            case 'w': keys.w = true; break;
-            case 'a': keys.a = true; break;
-            case 's': keys.s = true; break;
-            case 'd': keys.d = true; break;
-        }
-    });
+function applyDirection(dirIndex) {
+    const forcedCount = Math.floor(particles.length * ENDGAME_CONFIG.keyForceFraction);
 
-    window.addEventListener('keyup', (e) => {
-        switch (e.key.toLowerCase()) {
-            case 'w': keys.w = false; break;
-            case 'a': keys.a = false; break;
-            case 's': keys.s = false; break;
-            case 'd': keys.d = false; break;
-        }
-    });
-
-    // Resize event
-    window.addEventListener('resize', () => {
-        app.renderer.resize(window.innerWidth, window.innerHeight);
-    });
+    for (let i = 0; i < forcedCount; i++) {
+        const index = Math.floor(Math.random() * particles.length);
+        particles[index].direction = dirIndex;
+    }
 }
 
-// Process key presses
-function processKeys() {
-    // Check which keys are pressed
-    let direction = null;
-    let dirIndex = -1;
+let touchStartTime = 0;
+let touchStartPos = { x: 0, y: 0 };
+let isTouching = false;
+let longPressThreshold = 50; // ms
 
-    if (keys.w) { direction = 'w'; dirIndex = 0; }
-    if (keys.d) { direction = 'd'; dirIndex = 1; }
-    if (keys.s) { direction = 's'; dirIndex = 2; }
-    if (keys.a) { direction = 'a'; dirIndex = 3; }
+// Set up touch/mouse controls
+function handleTouchStart(event) {
+    const eventPos = event.touches ?
+        { x: event.touches[0].clientX, y: event.touches[0].clientY } :
+        { x: event.clientX, y: event.clientY };
 
-    // Apply force to a fraction of particles
-    if (direction) {
-        const forcedCount = Math.floor(particles.length * ENDGAME_CONFIG.keyForceFraction);
-        for (let i = 0; i < forcedCount; i++) {
-            const index = Math.floor(Math.random() * particles.length);
-            particles[index].forcedDirection = dirIndex;
+    touchStartTime = Date.now();
+    touchStartPos = eventPos;
+    isTouching = true;
+}
+
+function handleTouchMove(event) {
+    if (!isTouching) return;
+
+    const currentTime = Date.now();
+    if (currentTime - touchStartTime >= longPressThreshold) {
+        const eventPos = event.touches ?
+            { x: event.touches[0].clientX, y: event.touches[0].clientY } :
+            { x: event.clientX, y: event.clientY };
+
+        // Calculate direction based on the difference between current and start position
+        const dx = eventPos.x - touchStartPos.x;
+        const dy = eventPos.y - touchStartPos.y;
+
+        // Determine primary direction (the one with larger magnitude)
+        if (Math.abs(dx) > Math.abs(dy)) {
+            if (dx > 0) {
+                applyDirection(1);
+            } else {
+                applyDirection(3);
+            }
+        } else {
+            if (dy > 0) {
+                applyDirection(2);
+            } else {
+                applyDirection(0);
+            }
         }
     }
 }
+
+function handleTouchEnd() {
+    isTouching = false;
+}
+
+// Add touch/mouse event listeners
+window.addEventListener('mousedown', handleTouchStart);
+window.addEventListener('mousemove', handleTouchMove);
+window.addEventListener('mouseup', handleTouchEnd);
+
+window.addEventListener('touchstart', handleTouchStart);
+window.addEventListener('touchmove', handleTouchMove);
+window.addEventListener('touchend', handleTouchEnd);

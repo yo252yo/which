@@ -202,19 +202,80 @@ class StickFigure {
         // Player controlled flag
         this.isPlayerControlled = isPlayerControlled;
 
-        if (isPlayerControlled && localStorage.getItem("cheat") == "true" && !location.href.includes("title")) {
-            this.highlight = new PIXI.Graphics();
-            this.highlight.beginFill(0x44FFFF, 0.4);
-            this.highlight.drawCircle(0, 0, Math.floor(40 * this.scale));
-            this.highlight.endFill();
-            this.container.addChild(this.highlight);
-        }
-
         this.eaten_apples = [];
         // const border = new PIXI.Graphics();
         // border.lineStyle(2, 0xff0000, 1); // Red border
         // border.drawRect(-SPRITE_WIDTH / 2, -SPRITE_HEIGHT / 2, SPRITE_WIDTH, SPRITE_HEIGHT);
         // this.container.addChild(border);
+    }
+
+    handleAppleEating() {
+        ALL_APPLES.forEach((apple, index) => {
+            // Assume playerFigure.container and apple have 'getBounds()' methods:
+            if (hitTestRectangle(this.container.getBounds(), apple.getBounds())) {
+                app.stage.removeChild(apple);
+                ALL_APPLES.splice(index, 1);
+                spawnApples(1);
+
+                if (this.isPlayerControlled) {
+                    if (window.OPT_REQUIRED_APPLES) {
+                        if (!window.OPT_MATCHING_APPLES) {
+                            if (!window.OPT_DISTINCT_APPLES) {
+                                this.eaten_apples.push(apple.text);
+                            } else if (!this.eaten_apples.includes(apple.text)) {
+                                this.eaten_apples.push(apple.text);
+                            }
+                        } else if (this.eaten_apples.length == 0 || apple.text == this.eaten_apples[0]) {
+                            this.eaten_apples.push(apple.text);
+                        }
+
+                        if (this.eaten_apples.length > window.OPT_REQUIRED_APPLES) {
+                            this.eaten_apples.shift();
+                        }
+                        refresh_apple_counter(this.eaten_apples);
+                    }
+                }
+            }
+        });
+    }
+
+    handleFlocking() {
+        if (!window.OPT_FLOCKING) {
+            return;
+        }
+        if (this.flock || this.isPlayerControlled) {
+            return;
+        }
+
+        ALL_FIGURES.forEach((figure, index) => {
+            if (figure == this || figure.isPlayerControlled) {
+                return;
+            }
+
+            if (hitTestRectangle(this.container.getBounds(), figure.container.getBounds())) {
+                if (!figure.flock) {
+                    const new_flock = Object.keys(FLOCKS).length;
+                    this.flock = new_flock;
+                    figure.flock = new_flock;
+
+                    const avg_tint = (this.tint + figure.tint) / 2;
+                    this.tint = avg_tint;
+                    figure.tint = avg_tint;
+                    this.sprite.tint = avg_tint;
+                    figure.sprite.tint = avg_tint;
+
+                    FLOCKS[new_flock] = [this, figure];
+                    figure.direction = this.direction;
+                } else {
+                    this.flock = figure.flock;
+                    this.tint = figure.tint;
+                    this.sprite.tint = figure.tint;
+                    this.direction = figure.direction;
+                    FLOCKS[figure.flock].push(this);
+                }
+            }
+        });
+
     }
 
     update() {
@@ -247,70 +308,51 @@ class StickFigure {
             this.frameIndex = (this.frameIndex + 1) % 4; // 4 frames per animation
             this.updateAnimation();
         }
+        this.handleAppleEating();
+        this.handleFlocking();
+        this.changeDirection();
+    }
 
-        // Apple eating logic
-        ALL_APPLES.forEach((apple, index) => {
-            // Assume playerFigure.container and apple have 'getBounds()' methods:
-            if (hitTestRectangle(this.container.getBounds(), apple.getBounds())) {
-                app.stage.removeChild(apple);
-                ALL_APPLES.splice(index, 1);
-                spawnApples(1);
+    agingEffect() {
+        if (!window.OPT_AGING || this.isPlayerControlled) {
+            return;
+        }
 
-                if (this.isPlayerControlled) {
-                    if (window.OPT_REQUIRED_APPLES) {
-                        if (!window.OPT_MATCHING_APPLES) {
-                            if (!window.OPT_DISTINCT_APPLES) {
-                                this.eaten_apples.push(apple.text);
-                            } else if (!this.eaten_apples.includes(apple.text)) {
-                                this.eaten_apples.push(apple.text);
-                            }
-                        } else if (this.eaten_apples.length == 0 || apple.text == this.eaten_apples[0]) {
-                            this.eaten_apples.push(apple.text);
-                        }
+        var AGING_SPEED = 0.05;
+        this.alpha += this.aging_phase * AGING_SPEED * Math.random();
 
-                        if (this.eaten_apples.length > window.OPT_REQUIRED_APPLES) {
-                            this.eaten_apples.shift();
-                        }
-                        refresh_apple_counter(this.eaten_apples);
-                    }
+        if (this.alpha > 1) {
+            this.alpha = 1;
+            this.aging_phase = -1;
+        }
+        if (this.alpha < 0) {
+            this.alpha = 0;
+            this.aging_phase = 1;
+
+            this.container.x = Math.random() * app.screen.width;
+            this.container.y = Math.random() * app.screen.height;
+
+            this.tint = generateRGBColor(this.isPlayerControlled, window.OPT_COLOR_CONSTRAIN_FACTOR);
+        }
+        this.sprite.alpha = this.alpha;
+        this.sprite.tint = this.tint;
+    }
+
+    changeDirection() {
+        if (window.OPT_FLOCKING && this.flock) {
+            if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA / FLOCKS[this.flock].length) {
+                this.direction = Math.floor(Math.random() * 4);
+                for (var f of FLOCKS[this.flock]) {
+                    f.direction = this.direction;
                 }
+                this.updateAnimation();
             }
-        });
-
-        // Flocking logic
-        if (window.OPT_FLOCKING) {
-            if (this.flock || this.isPlayerControlled) {
-                return;
+        } else {
+            // normal direction change
+            if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
+                this.direction = Math.floor(Math.random() * 4);
+                this.updateAnimation();
             }
-
-            ALL_FIGURES.forEach((figure, index) => {
-                if (figure == this || figure.isPlayerControlled) {
-                    return;
-                }
-
-                if (hitTestRectangle(this.container.getBounds(), figure.container.getBounds())) {
-                    if (!figure.flock) {
-                        const new_flock = Object.keys(FLOCKS).length;
-                        this.flock = new_flock;
-                        figure.flock = new_flock;
-
-                        const avg_tint = (this.tint + figure.tint) / 2;
-                        this.tint = avg_tint;
-                        figure.tint = avg_tint;
-                        this.sprite.tint = avg_tint;
-                        figure.sprite.tint = avg_tint;
-
-                        FLOCKS[new_flock] = [this, figure];
-                        figure.direction = this.direction;
-                    } else {
-                        this.flock = figure.flock;
-                        this.tint = figure.tint;
-                        this.sprite.tint = figure.tint;
-                        this.direction = figure.direction;
-                        FLOCKS[figure.flock].push(this);
-                    }
-                }
-            });
         }
     }
 
@@ -332,41 +374,32 @@ class StickFigure {
             SPRITE_HEIGHT
         );
 
-        if (window.OPT_FLOCKING && this.flock) {
-            if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA / FLOCKS[this.flock].length) {
-                this.direction = Math.floor(Math.random() * 4);
-                for (var f of FLOCKS[this.flock]) {
-                    f.direction = this.direction;
-                }
-                this.updateAnimation();
-            }
-        } else {
-            // normal direction change
-            if (!this.isPlayerControlled && Math.random() < CHANGE_DIRECTION_PROBA) {
-                this.direction = Math.floor(Math.random() * 4);
-                this.updateAnimation();
-            }
+        this.agingEffect();
+    }
+
+    setWinCondition() {
+        if (!this.isPlayerControlled) {
+            return;
         }
-
-        if (window.OPT_AGING && !this.isPlayerControlled) {
-            var AGING_SPEED = 0.05;
-            this.alpha += this.aging_phase * AGING_SPEED * Math.random();
-
-            if (this.alpha > 1) {
-                this.alpha = 1;
-                this.aging_phase = -1;
+        this.sprite.eventMode = 'static';
+        this.sprite.on('pointerdown', () => {
+            if (!window.OPT_REQUIRED_APPLES) {
+                window.REQ_WIN();
+            } else {
+                if (this.eaten_apples.length >= window.OPT_REQUIRED_APPLES) {
+                    window.REQ_WIN();
+                }
             }
-            if (this.alpha < 0) {
-                this.alpha = 0;
-                this.aging_phase = 1;
+        });
+    }
 
-                this.container.x = Math.random() * app.screen.width;
-                this.container.y = Math.random() * app.screen.height;
-
-                this.tint = generateRGBColor(this.isPlayerControlled, window.OPT_COLOR_CONSTRAIN_FACTOR);
-            }
-            this.sprite.alpha = this.alpha;
-            this.sprite.tint = this.tint;
+    makeHighlight() {
+        if (this.isPlayerControlled && localStorage.getItem("cheat") == "true" && !location.href.includes("title")) {
+            this.highlight = new PIXI.Graphics();
+            this.highlight.beginFill(0x44FFFF, 0.4);
+            this.highlight.drawCircle(0, 0, Math.floor(40 * this.scale));
+            this.highlight.endFill();
+            this.container.addChild(this.highlight);
         }
     }
 
@@ -390,27 +423,17 @@ class StickFigure {
         this.sprite.tint = this.tint;
         this.sprite.alpha = this.alpha;
 
-        // Make sprite interactive if player controlled
-        if (this.isPlayerControlled) {
-            this.sprite.eventMode = 'static';
-            this.sprite.on('pointerdown', () => {
-                if (!window.OPT_REQUIRED_APPLES) {
-                    window.REQ_WIN();
-                } else {
-                    if (this.eaten_apples.length >= window.OPT_REQUIRED_APPLES) {
-                        window.REQ_WIN();
-                    }
-                }
-            });
-        }
         this.sprite.scale.set(this.scale, this.scale);
+
+        this.setWinCondition();
+        this.makeHighlight();
+
 
         if (window.OPT_BLUR) {
             const blurFilter = new PIXI.filters.BlurFilter();
             blurFilter.blur = window.OPT_BLUR;
             this.sprite.filters = [blurFilter];
         }
-
 
         this.container.addChild(this.sprite);
 

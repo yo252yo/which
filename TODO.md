@@ -1,5 +1,11 @@
 * p29: needs cluttering and singlign out of one dot
 * p32: need to check for epilepsy
+  
+* Make the text hidden by default and appear later
+* 24+ lags on surface, mb keep it to <= 24 decoys
+* Speedup with shift
+* Discord: put higher on website, prepare
+
 
 * new game + color picker
 * sfx on found, mb vfx too?

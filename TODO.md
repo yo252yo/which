@@ -1,4 +1,5 @@
-* p29: needs cluttering and singlign out of one dot
+* p29: needs cluttering and singlign out of one dot. singling is done i think but cluttering should be easy with a flock based spawning algo
+
 * p32: need to check for epilepsy
   
 * Make the text hidden by default and appear later

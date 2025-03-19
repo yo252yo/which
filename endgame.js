@@ -68,51 +68,82 @@ function createDotTexture() {
     return app.renderer.generateTexture(gfx);
 }
 
+const GRID_COLS = 4;
+const GRID_ROWS = 4;
+const regionWidth = app.screen.width / GRID_COLS;
+const regionHeight = app.screen.height / GRID_ROWS;
+const FLOCKS = {};
 // Initialize particles
 function init() {
     // Create a shared texture for all particles
     const dotTexture = createDotTexture();
 
-    // Create particles
-    for (let i = 0; i < ENDGAME_CONFIG.particleCount; i++) {
-        // Create sprite with shared texture
-        const particle = new PIXI.Sprite(dotTexture);
+    // Calculate particles per region (evenly distributed)
+    const particlesPerRegion = Math.ceil(ENDGAME_CONFIG.particleCount / (GRID_COLS * GRID_ROWS));
 
-        // Set anchor to center
-        particle.anchor.set(0.5);
+    let flock_index = 1;
+    FLOCKS[flock_index] = [];
+    // Create particles for each region
+    for (let row = 0; row < GRID_ROWS; row++) {
+        for (let col = 0; col < GRID_COLS; col++) {
+            // Calculate region boundaries
+            const regionX = col * regionWidth;
+            const regionY = row * regionHeight;
 
-        // Random position
-        particle.x = Math.random() * app.screen.width;
-        particle.y = Math.random() * app.screen.height;
+            // Spawn particles in this region
+            let flock_size = 1;
+            let dirIndex = Math.floor(Math.random() * 4);
+            let tint = Math.random() * 0xFFFFFF;
+            let centerX = regionX + (Math.random() * regionWidth);
+            let centerY = regionY + (Math.random() * regionHeight);
+            for (let i = 0; i < particlesPerRegion; i++) {
+                // Skip if we've reached the total particle count
+                if (particles.length >= ENDGAME_CONFIG.particleCount) break;
 
-        // Random color
-        particle.tint = Math.random() * 0xFFFFFF;
+                // Create sprite with shared texture
+                const particle = new PIXI.Sprite(dotTexture);
+                particle.flock = flock_index;
+                FLOCKS[flock_index].push(particle);
+                // Set anchor to center
+                particle.anchor.set(0.5);
+                // Position within this region
+                let varX = Math.floor(Math.random() * 100) - 50;
+                let varY = Math.floor(Math.random() * 100) - 50;
+                particle.x = Math.max(0, Math.min(centerX + varX, regionX + regionWidth));
+                particle.y = Math.max(0, Math.min(centerY + varY, regionY + regionHeight));
+                // Random color
+                particle.tint = tint;
+                // Set alpha
+                particle.alpha = ENDGAME_CONFIG.particleAlpha;
+                // Store extra data
+                particle.direction = dirIndex;
+                particle.speed = ENDGAME_CONFIG.moveSpeed;
+                // Add to container
+                mainContainer.addChild(particle);
+                // Add to tracking array
+                particles.push(particle);
+                // Make interactive
+                particle.interactive = true;
+                particle.on('pointerdown', () => {
+                    if (window.REQ_WIN) {
+                        window.REQ_WIN();
+                    }
+                });
 
-        // Set alpha
-        particle.alpha = ENDGAME_CONFIG.particleAlpha;
+                flock_size--;
+                if (flock_size <= 0) {
+                    flock_index++;
+                    flock_size = Math.ceil(Math.random() * 12);
+                    FLOCKS[flock_index] = [];
+                    dirIndex = Math.floor(Math.random() * 4);
+                    tint = Math.random() * 0xFFFFFF;
+                    centerX = regionX + (Math.random() * regionWidth);
+                    centerY = regionY + (Math.random() * regionHeight);
+                }
 
-        // Pick a random direction (0-3)
-        const dirIndex = Math.floor(Math.random() * 4);
-
-        // Store extra data
-        particle.direction = dirIndex;
-        particle.speed = ENDGAME_CONFIG.moveSpeed;
-
-        // Add to container
-        mainContainer.addChild(particle);
-
-        // Add to tracking array
-        particles.push(particle);
-
-
-        particle.interactive = true;
-        particle.on('pointerdown', () => {
-            if (window.REQ_WIN) {
-                window.REQ_WIN();
             }
-        });
+        }
     }
-
     // Apply blur
     updateBlur();
 }
@@ -123,8 +154,11 @@ function updateParticles(delta) {
         const p = particles[i];
 
         // Random direction change
-        if (Math.random() < ENDGAME_CONFIG.directionChangeProbability) {
+        if (Math.random() < ENDGAME_CONFIG.directionChangeProbability / FLOCKS[p.flock].length) {
             p.direction = Math.floor(Math.random() * 4);
+            for (var e of FLOCKS[p.flock]) {
+                e.direction = p.direction;
+            }
         }
 
         const dir = DIRECTIONS[p.direction];

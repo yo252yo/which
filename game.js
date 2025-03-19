@@ -122,16 +122,18 @@ function generateRGBColor(isPlayer = false, scalingFactor = 1) {
     let r, g, b;
 
     var playerDefaultColor = 102;
+    var minColor = 30; // avoid black on black
+
     let rng = function () {
-        if (Math.random() < playerDefaultColor / 256) { // we decrease
+        if (Math.random() < playerDefaultColor / 256) { // below playerDefaultColor
             if (isPlayer) {
-                return playerDefaultColor * (1 - scalingFactor * Math.random());
+                return minColor + (playerDefaultColor - minColor) * (1 - scalingFactor * Math.random());
             }
             else {
                 var boundary = playerDefaultColor * (1 - scalingFactor);
-                return boundary * Math.random() * scalingFactor; // multiplication by * scalingFactor to increase contrast with NPCs
+                return minColor + (boundary - minColor) * Math.random() * scalingFactor; // multiplication by * scalingFactor to increase contrast with NPCs
             }
-        } else { // we increase
+        } else { // above playerDefaultColor
             var boundary = playerDefaultColor * (1 + scalingFactor);
             if (isPlayer) {
                 return playerDefaultColor + (boundary - playerDefaultColor) * Math.random();

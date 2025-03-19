@@ -601,6 +601,7 @@ for (let i = 0; i < NUM_DECOYS; i++) {
     app.stage.addChild(figure.container);
 }
 app.ticker.add(() => {
+    perfMonitoring.update();
     ALL_FIGURES.forEach(figure => figure.update());
 });
 
@@ -663,3 +664,64 @@ function refresh_apple_counter(eaten_apples) {
     var missing = Math.max(0, window.OPT_REQUIRED_APPLES - eaten_apples.length);
     appleDiv.innerText += "_ ".repeat(missing);
 }
+
+//HACK ==========================================================================================
+//HACK ===== PERF MONITORING
+
+
+const perfMonitoring = {
+    frameCount: 0,
+    lastTime: performance.now(),
+    fps: 0,
+    history: [], // Store recent FPS values
+
+    update: function () {
+        this.frameCount++;
+        const now = performance.now();
+        const elapsed = now - this.lastTime;
+
+        if (elapsed >= 1000) { // Update every second
+            this.fps = Math.round((this.frameCount * 1000) / elapsed);
+            this.frameCount = 0;
+            this.lastTime = now;
+
+            // Store history (keep last 10 readings)
+            this.history.push(this.fps);
+            if (this.history.length > 10) this.history.shift();
+
+            if (this.fps < 45 && ALL_FIGURES.length > 30 && document.visibilityState == "visible") {
+                const figuresToRemove = Math.floor(ALL_FIGURES.length * 0.1); // Calculate 10% of ALL_FIGURES
+                console.log(`KILLING ${figuresToRemove} / ${ALL_FIGURES.length}`);
+
+                // Create a list of figures to remove
+                const figuresForRemoval = [];
+                let count = 0;
+
+                // Identify figures to remove
+                for (let i = 0; i < ALL_FIGURES.length && count < figuresToRemove; i++) {
+                    const mySprite = ALL_FIGURES[i];
+                    if (!mySprite.isPlayerControlled && !mySprite.flock) {
+                        figuresForRemoval.push(mySprite);
+                        count++;
+                    }
+                }
+
+                // Remove the identified figures
+                for (const figureToRemove of figuresForRemoval) {
+                    // Visual indication
+                    figureToRemove.sprite.tint = 0xff0000;
+                    figureToRemove.container.visible = false;
+
+                    // Remove from stage
+                    app.stage.removeChild(figureToRemove);
+
+                    // Remove from array (find index and splice)
+                    const index = ALL_FIGURES.indexOf(figureToRemove);
+                    if (index !== -1) {
+                        ALL_FIGURES.splice(index, 1);
+                    }
+                }
+            }
+        }
+    }
+};

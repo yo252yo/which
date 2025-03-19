@@ -93,10 +93,10 @@
     </div>
     <script>
         // CHEAT MODE
-        var epilepsyToggle = document.getElementById("cheatToggle");
-        epilepsyToggle.checked = localStorage.getItem("cheat") === "true";
-        epilepsyToggle.addEventListener("change", function () {
-            localStorage.setItem("cheat", epilepsyToggle.checked ? "true" : "false");
+        var cheatToggle = document.getElementById("cheatToggle");
+        cheatToggle.checked = localStorage.getItem("cheat") === "true";
+        cheatToggle.addEventListener("change", function () {
+            localStorage.setItem("cheat", cheatToggle.checked ? "true" : "false");
         });
 
         // EPILEPSY MODE

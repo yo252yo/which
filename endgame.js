@@ -12,6 +12,21 @@ const app = new PIXI.Application({
 });
 document.body.appendChild(app.view);
 
+if (localStorage.getItem("epilepsy") === "true") {
+    app.ticker.maxFPS = 1;
+
+    ENDGAME_CONFIG.moveSpeed /= 10;
+
+    // Create a fullscreen gray overlay
+    const grayOverlay = new PIXI.Graphics();
+    grayOverlay.beginFill(0xAAAAAA, 0.6);
+    grayOverlay.drawRect(0, 0, app.screen.width, app.screen.height);
+    grayOverlay.endFill();
+
+    // Add overlay to stage
+    app.stage.addChild(grayOverlay);
+}
+
 
 // Direction constants (only 4 directions)
 const DIRECTIONS = [

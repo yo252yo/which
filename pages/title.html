@@ -12,7 +12,9 @@
         }
 
         .settings {
-            font-size: large;
+            font-size: small;
+            margin-bottom: 0px;
+            padding: 0px;
         }
 
         p {
@@ -69,27 +71,39 @@
 
         <p id="continue"></p>
         <p><a id="start" href="#" onClick="start();"></a></p>
-        <p id="jump"></p>
+        <p id="jump" style="margin-bottom:50px;"></p>
 
 
-        <p style="margin-top:50px;">
-            <span id="musicvol" style="margin-right:20px;" class="settings"></span><input type="range" id="slider"
-                min="0" max="100" value="0">
+        <p id="epilepsy_checkbox" class="settings">
+            <input type="checkbox" id="epilepsyToggle">
+            <span id="epilepsyLabel" htmlFor="epilepsyToggle" style="margin-left:20px;"></span>
         </p>
 
-        <p id="cheat_checkbox">
+        <p id="cheat_checkbox" class="settings">
             <input type="checkbox" id="cheatToggle">
-            <span id="cheatLabel" htmlFor="cheatToggle" style="margin-left:20px;" class="settings"></span>
+            <span id="cheatLabel" htmlFor="cheatToggle" style="margin-left:20px;"></span>
         </p>
-        <p id="credits" style="font-size: x-small;font-style: italic;"></p>
+
+        <p class="settings">
+            <span id="musicvol" style="margin-right:20px;"></span><input type="range" id="slider" min="0" max="100"
+                value="0" style="height: 4px;width:100px;padding:5px;">
+        </p>
+        <p id="credits" style="font-size: x-small;font-style: italic;margin-top:50px"></p>
 
     </div>
     <script>
         // CHEAT MODE
-        var cheatToggle = document.getElementById("cheatToggle");
-        cheatToggle.checked = localStorage.getItem("cheat") === "true";
-        cheatToggle.addEventListener("change", function () {
-            localStorage.setItem("cheat", cheatToggle.checked ? "true" : "false");
+        var epilepsyToggle = document.getElementById("cheatToggle");
+        epilepsyToggle.checked = localStorage.getItem("cheat") === "true";
+        epilepsyToggle.addEventListener("change", function () {
+            localStorage.setItem("cheat", epilepsyToggle.checked ? "true" : "false");
+        });
+
+        // EPILEPSY MODE
+        var epilepsyToggle = document.getElementById("epilepsyToggle");
+        epilepsyToggle.checked = localStorage.getItem("epilepsy") === "true";
+        epilepsyToggle.addEventListener("change", function () {
+            localStorage.setItem("epilepsy", epilepsyToggle.checked ? "true" : "false");
         });
 
         // CONTINUE
@@ -152,6 +166,7 @@
                 setText("jumpPage", "> Aller à une page");
                 setText("musicvol", "Volume musique");
                 setText("cheatLabel", "Mode narratif (surligne la cible)");
+                setText("epilepsyLabel", "⚠️ La fin du jeu contient des particules colorées et rapides pouvant présenter un risque pour les personnes épileptiques ou sensibles. Cette option réduit l’intensité de l’animation pour une expérience plus sûre.");
 
                 document.getElementById("credits").innerHTML = `
                     Un jeu par <a href="https://www.yo252yo.com" target="_blank">yo252yo</a>,
@@ -164,6 +179,7 @@
                 setText("jumpPage", "> Jump to a page");
                 setText("musicvol", "Music volume");
                 setText("cheatLabel", "Narrative mode (highlights target)");
+                setText("epilepsyLabel", "⚠️ The game's ending features fast colorful particles that may pose a risk to individuals with epilepsy or similar sensitivity. Enabling this setting reduces animation intensity for a safer experience.");
 
                 document.getElementById("credits").innerHTML = `
                     A game by <a href="https://www.yo252yo.com" target="_blank">yo252yo</a>

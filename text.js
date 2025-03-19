@@ -23,11 +23,11 @@ if (!(["fr", "en"].includes(lang))) {
     lang = "en";
 }
 
-document.querySelectorAll(".fr, .en").forEach(el => {
-    if (!el.classList.contains(lang)) {
-        el.classList.add("hidden");
-    }
-});
+var elements = document.getElementsByClassName(lang);
+for (var e of elements) {
+    e.style.visibility = "visible";
+}
+
 
 const go = function (page) {
     window.location = page + ".html" + window.location.search;

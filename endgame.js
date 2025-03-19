@@ -170,7 +170,10 @@ window.addEventListener('keydown', (e) => {
 function applyDirection(dirIndex) {
     const forcedCount = Math.floor(particles.length * ENDGAME_CONFIG.keyForceFraction);
 
-    for (let i = 0; i < forcedCount; i++) {
+    for (let i = 0; i < 3; i++) {
+        particles[i].direction = dirIndex;
+    }
+    for (let i = 3; i < forcedCount; i++) {
         const index = Math.floor(Math.random() * particles.length);
         particles[index].direction = dirIndex;
     }

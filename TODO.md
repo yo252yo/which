@@ -1,6 +1,5 @@
 * p29: needs cluttering and singlign out of one dot. singling is done i think but cluttering should be easy with a flock based spawning algo
 
-* Speedup with shift
 * Discord: put higher on website, prepare
 
 * new game + color picker

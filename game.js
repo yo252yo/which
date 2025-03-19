@@ -7,7 +7,7 @@
 const CHANGE_DIRECTION_PROBA = 0.05;
 const PIXEL_RATIO_ADJUST = window.devicePixelRatio - 1;
 const SCREEN_SIZE_ADJUST = (window.innerWidth * window.innerHeight) / 1700000;
-const CHARACTERS_SPEED = (window.OPT_CHAR_SPEED_MOD || 1) * 1 / (1 + 0.5 * PIXEL_RATIO_ADJUST);
+let CHARACTERS_SPEED = (window.OPT_CHAR_SPEED_MOD || 1) * 1 / (1 + 0.5 * PIXEL_RATIO_ADJUST);
 const ANIMATION_SPEED = (window.OPT_ANIM_SPEED_MOD || 1) * 0.15 / (1 + 0.4 * PIXEL_RATIO_ADJUST);
 const SPRITE_WIDTH = 48;
 const SPRITE_HEIGHT = 64;
@@ -39,6 +39,7 @@ window.addEventListener('resize', () => {
 
 //HACK ==========================================================================================
 //HACK ===== INPUT
+const ORIGINAL_SPEED = CHARACTERS_SPEED;
 if (!window.OPT_NO_INPUT) {
     const keys = {};
     window.addEventListener('keydown', (e) => {
@@ -56,10 +57,17 @@ if (!window.OPT_NO_INPUT) {
                 case 'd': PLAYER_FIGURE.setPlayerDirection(2); break; // Right
             }
         }
+        if (e.shiftKey) {
+            console.log("GGF");
+            CHARACTERS_SPEED = ORIGINAL_SPEED * 3;
+        }
     });
 
     window.addEventListener('keyup', (e) => {
         keys[e.key.toLowerCase()] = false;
+        if (!e.shiftKey) {
+            CHARACTERS_SPEED = ORIGINAL_SPEED;
+        }
     });
 
     let touchStartTime = 0;
@@ -179,8 +187,6 @@ class StickFigure {
             this.direction = window.OPT_FIXED_DIRECTION;
         }
 
-        // Set slower random speed between 0.5 and 1.5
-        this.speed = CHARACTERS_SPEED;
         // Random tint color
         this.tint = generateRGBColor(isPlayerControlled, window.OPT_COLOR_CONSTRAIN_FACTOR);
         if (isPlayerControlled && window.OPT_PLAYER_TINT) {
@@ -359,16 +365,16 @@ class StickFigure {
         if (window.OPT_STOP_MOTION) return;
         switch (this.direction) {
             case 0: // Down (row 0 in spritesheet)
-                this.container.y += this.speed;
+                this.container.y += CHARACTERS_SPEED;
                 break;
             case 1:  // Left (row 1 in spritesheet)
-                this.container.x -= this.speed;
+                this.container.x -= CHARACTERS_SPEED;
                 break;
             case 2: // Right (row 2 in spritesheet)
-                this.container.x += this.speed;
+                this.container.x += CHARACTERS_SPEED;
                 break;
             case 3: // Up (row 3 in spritesheet)
-                this.container.y -= this.speed;
+                this.container.y -= CHARACTERS_SPEED;
                 break;
         }
 

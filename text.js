@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const navDiv = document.createElement("div");
         navDiv.id = "navigation";
 
-        const destination = n ? (n - 1) : "title";
+        const destination = n > 1 ? (n - 1) : "title";
 
         navDiv.innerHTML = `
             <a href="${destination}.html" style="text-decoration: none;" title="back">⏪</a>

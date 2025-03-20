@@ -53,5 +53,29 @@ document.addEventListener("DOMContentLoaded", function () {
         // const maxPage = localStorage.getItem("maxPage");
         // localStorage.setItem("maxPage", Math.max(maxPage, n));
         localStorage.setItem("maxPage", n);
+
+
+        if (localStorage.getItem("finished")) {
+            const ngpDiv = document.createElement("div");
+            ngpDiv.id = "newgameplus";
+            var color = localStorage.getItem("forcedColor") || window.PLAYER_COLOR || "#444444"
+            var extraClass = localStorage.getItem("forcedColor") ? "lockedColor" : "";
+            ngpDiv.innerHTML = `
+            <input type="color" id="colorPicker" value="${color}" class="${extraClass}" style="width:30px;height:30px;padding:0px;">
+            &nbsp;
+            <a onClick="window.resetColor();">🧹</a>
+        `;
+            document.body.appendChild(ngpDiv);
+
+            const colorPicker = document.getElementById('colorPicker');
+
+            // Add an event listener to detect color changes
+            colorPicker.addEventListener('input', function () {
+                const selectedColor = this.value;
+                localStorage.setItem("forcedColor", selectedColor);
+                window.checkColor();
+                this.classList.add("lockedColor");
+            });
+        }
     }
 });

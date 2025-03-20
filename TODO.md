@@ -1,7 +1,5 @@
 
 * Discord: put higher on website, prepare
-
-* new game + color picker
 * sfx on found, mb vfx too?
 
 

@@ -19,6 +19,28 @@ if (window.OPT_FIXED_DECOY) {
     NUM_DECOYS = OPT_FIXED_DECOY;
 }
 
+window.checkColor = function () {
+    var c = localStorage.getItem("forcedColor");
+    if (!c) {
+        return;
+    }
+    const decimalColor = parseInt(c.substring(1), 16);
+    window.OPT_PLAYER_TINT = decimalColor;
+
+    if (PLAYER_FIGURE.tint != window.OPT_PLAYER_TINT) {
+        PLAYER_FIGURE.tint = window.OPT_PLAYER_TINT;
+        PLAYER_FIGURE.sprite.tint = window.OPT_PLAYER_TINT;
+    }
+}
+
+window.resetColor = function () {
+    localStorage.removeItem('forcedColor');
+
+    var tint = generateRGBColor(true);
+    PLAYER_FIGURE.tint = tint;
+    PLAYER_FIGURE.sprite.tint = tint;
+}
+
 //HACK ==========================================================================================
 //HACK ===== APPLICATION
 
@@ -58,7 +80,6 @@ if (!window.OPT_NO_INPUT) {
             }
         }
         if (e.shiftKey) {
-            console.log("GGF");
             CHARACTERS_SPEED = ORIGINAL_SPEED * 3;
         }
     });
@@ -130,7 +151,11 @@ function generateRGBColor(isPlayer = false, scalingFactor = 1) {
     let r, g, b;
 
     var playerDefaultColor = 102;
-    var minColor = 30; // avoid black on black
+    var minColor = 40; // avoid black on black
+
+    if (scalingFactor < 0.2) { // not used in the game but avoids breakage
+        scalingFactor = 0.2;
+    }
 
     let rng = function () {
         if (Math.random() < playerDefaultColor / 256) { // below playerDefaultColor
@@ -142,14 +167,16 @@ function generateRGBColor(isPlayer = false, scalingFactor = 1) {
                 return minColor + (boundary - minColor) * Math.random() * scalingFactor; // multiplication by * scalingFactor to increase contrast with NPCs
             }
         } else { // above playerDefaultColor
-            var boundary = playerDefaultColor * (1 + scalingFactor);
+
             if (isPlayer) {
-                return playerDefaultColor + (boundary - playerDefaultColor) * Math.random();
+                var correctBoundary = playerDefaultColor + scalingFactor * (256 - playerDefaultColor);
+                return playerDefaultColor + (correctBoundary - playerDefaultColor) * Math.random();
             }
             else {
-                return 256 - scalingFactor * (256 - boundary) * Math.random(); // multiplication by * scalingFactor to increase contrast with NPCs
+                // We force values towards the extreme to get vibrant colors. We ban the range [102;156].
+                // This was originally a mistake in the code but I like the effect.
+                return 256 - 100 * Math.random() * scalingFactor * scalingFactor;
             }
-
         }
     }
 
@@ -157,8 +184,25 @@ function generateRGBColor(isPlayer = false, scalingFactor = 1) {
     g = Math.floor(rng());
     b = Math.floor(rng());
 
+    // White is only for NG+
+    while (r > 175 && g > 175 && b > 175) {
+        r = Math.floor(rng());
+        g = Math.floor(rng());
+        b = Math.floor(rng());
+    }
+
     // Combine into a single hex value for Pixi.js tint
-    return (r << 16) + (g << 8) + b;
+    var value = (r << 16) + (g << 8) + b;
+
+    if (isPlayer) {
+        var picker = document.getElementById("colorPicker");
+        if (picker) {
+            picker.value = `#${value.toString(16).padStart(6, '0')}`;
+            picker.classList.remove("lockedColor");
+        }
+        window.PLAYER_COLOR = `#${value.toString(16).padStart(6, '0')}`;
+    }
+    return value;
 }
 
 const FLOCKS = {};
@@ -598,6 +642,7 @@ if (window.OPT_PLAYER_CENTERED) {
 }
 ALL_FIGURES.push(PLAYER_FIGURE);
 app.stage.addChild(PLAYER_FIGURE.container);
+window.checkColor();
 
 // Create 99 more regular figures
 for (let i = 0; i < NUM_DECOYS; i++) {

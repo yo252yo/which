@@ -91,6 +91,8 @@ div {
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 3px;
     visibility: hidden;
+    width: fit-content;
+    padding: 5px;
 }
 
 .lighttext {
@@ -99,6 +101,8 @@ div {
     background-color: rgba(256, 256, 256, 0.2);
     border-radius: 3px;
     visibility: hidden;
+    width: fit-content;
+    padding: 5px;
 }
 
 /* quicksand-regular - latin */

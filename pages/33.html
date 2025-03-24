@@ -12,9 +12,6 @@
             go("1");
         }
 
-        localStorage.setItem("finished", "true");
-        localStorage.setItem("forcedColor", "#FFFFFF");
-
         window.OPT_ENDING_EASY_WIN = true;
 
         const ENDGAME_CONFIG = {
@@ -40,6 +37,10 @@
         où.</div>
     <script src="../pixi.min.js"></script>
     <script src="../endgame.js"></script>
+    <script defer async>
+        localStorage.setItem("finished", "true");
+        localStorage.setItem("forcedColor", "#FFFFFF");
+    </script>
 </body>
 
 </html>

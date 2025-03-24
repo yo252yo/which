@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Which is I</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        a {
+            font-weight: bold;
+        }
+
+        .settings {
+            font-size: small;
+            margin-bottom: 0px;
+            padding: 0px;
+        }
+
+        h1,
+        p {
+            background-color: rgba(256, 256, 256, 0.6);
+            border-radius: 5px;
+            padding: 3px;
+            margin-top: 0px;
+            margin-bottom: 10px;
+            width: fit-content;
+            padding: 5px;
+        }
+
+        @media screen and (max-height: 750px) {
+            body {
+                overflow-y: scroll;
+            }
+        }
+    </style>
+    <script src="../text.js"></script>
+    <script>
+        window.REQ_WIN = function () { }
+
+        window.OPT_DESIRED_DECOYS = 100;
+        window.OPT_BACKGROUND_COLOR = 0xFFFFFF;
+        window.OPT_CHAR_ALPHA = 0.8;
+        window.OPT_BLUR = 4;
+        window.OPT_CHAR_SCALE = 3;
+
+        window.OPT_CHAR_SPEED_MOD = 0.6;
+        window.OPT_ANIM_SPEED_MOD = 0.5;
+
+        var LANG = "kr";// localStorage.getItem("LANG") || navigator.language.slice(0, 2) || "en";
+
+        function start(page) {
+            if (!page) {
+                page = "1";
+            }
+            location.href = page + ".html?lang=" + LANG;
+        }
+        function jump() {
+            var p = prompt("Page?");
+            start(p);
+        }
+    </script>
+</head>
+
+<body>
+    <div style="left:50px;top:50px;display:block;position:absolute;">
+        <h1 id="title">Find Your Self</h1>
+
+    </div>
+    <script>
+        localStorage.setItem("cheat", true);
+        // CHEAT MODE
+        var cheatToggle = document.getElementById("cheatToggle");
+        cheatToggle.checked = localStorage.getItem("cheat") === "true";
+        cheatToggle.addEventListener("change", function () {
+            localStorage.setItem("cheat", cheatToggle.checked ? "true" : "false");
+        });
+
+        // EPILEPSY MODE
+        var epilepsyToggle = document.getElementById("epilepsyToggle");
+        epilepsyToggle.checked = localStorage.getItem("epilepsy") === "true";
+        epilepsyToggle.addEventListener("change", function () {
+            localStorage.setItem("epilepsy", epilepsyToggle.checked ? "true" : "false");
+        });
+
+        // CONTINUE
+        if (localStorage.getItem("maxPage")) {
+            var page = parseInt(localStorage.getItem("maxPage"));
+            document.getElementById("continue").innerHTML = `
+                <a href="#" onClick="start(${page});">
+                    <span id="continueText">> </span> (page ${page})
+                </a>
+                `;
+            document.getElementById("jump").innerHTML = `
+                <a href="#" onClick="jump();" id="jumpPage"></a>
+                `;
+        }
+
+        // AUDIO
+        const slider = document.getElementById('slider');
+        slider.addEventListener('input', function () {
+            if (window.parent) {
+                window.parent.changeMusicVolume(slider.value);
+            }
+        });
+
+        try {
+            slider.value = Math.floor(100 * window.parent.MUSIC_AUDIO.volume);
+        } catch {
+            // otherwise it crashes when not iframed ofc
+        }
+
+        // TRANSLATION
+        document.getElementById("toEN").addEventListener("mouseover", toEN);
+        document.getElementById("toEN").addEventListener("click", toEN);
+        document.getElementById("toEN").addEventListener("touch", toEN);
+
+        document.getElementById("toFR").addEventListener("mouseover", toFR);
+        document.getElementById("toFR").addEventListener("click", toFR);
+        document.getElementById("toFR").addEventListener("touch", toFR);
+
+        function toEN() {
+            translate("en");
+        }
+        function toFR() {
+            translate("fr");
+        }
+
+        function setText(id, text) {
+            var div = document.getElementById(id);
+            if (div) {
+                div.innerText = text;
+            }
+        }
+
+        function translate(lang) {
+            LANG = lang;
+            localStorage.setItem("LANG", lang);
+            if (lang == "fr") {
+                setText("title", "Cherches Toi");
+                setText("start", "> Commencer");
+                setText("continueText", "> Continuer");
+                setText("jumpPage", "> Aller à une page");
+                setText("musicvol", "Volume musique");
+                setText("cheatLabel", "Mode narratif (surligne la cible)");
+                setText("epilepsyLabel", "⚠️ La fin du jeu contient des particules colorées et rapides pouvant présenter un risque pour les personnes épileptiques ou sensibles. Cette option réduit l’intensité de l’animation pour une expérience plus sûre.");
+
+                document.getElementById("credits").innerHTML = `
+                    Un jeu par <a href="https://www.yo252yo.com" target="_blank">yo252yo</a>,
+                    musique par <a href="https://loyaltyfreakmusic.com/" target="_blank">Rrrrrose Azerty</a>
+                    `;
+            } else {//} if (lang == "en") {
+                setText("title", "Find Your Self");
+                setText("start", "> Start");
+                setText("continueText", "> Continue");
+                setText("jumpPage", "> Jump to a page");
+                setText("musicvol", "Music volume");
+                setText("cheatLabel", "Narrative mode (highlights target)");
+                setText("epilepsyLabel", "⚠️ The game's ending features fast colorful particles that may pose a risk to individuals with epilepsy or similar sensitivity. Enabling this setting reduces animation intensity for a safer experience.");
+
+                document.getElementById("credits").innerHTML = `
+                    A game by <a href="https://www.yo252yo.com" target="_blank">yo252yo</a>
+                    with music from <a href="https://loyaltyfreakmusic.com/" target="_blank">Rrrrrose Azerty</a>
+                    `;
+            }
+        }
+
+        translate(LANG);
+    </script>
+
+    <script src="../pixi.min.js"></script>
+    <script src="../game.js"></script>
+</body>
+
+</html>

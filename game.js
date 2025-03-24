@@ -27,7 +27,7 @@ window.checkColor = function () {
     const decimalColor = parseInt(c.substring(1), 16);
     window.OPT_PLAYER_TINT = decimalColor;
 
-    if (PLAYER_FIGURE.tint != window.OPT_PLAYER_TINT) {
+    if (PLAYER_FIGURE && PLAYER_FIGURE.tint != window.OPT_PLAYER_TINT) {
         PLAYER_FIGURE.tint = window.OPT_PLAYER_TINT;
         PLAYER_FIGURE.sprite.tint = window.OPT_PLAYER_TINT;
     }

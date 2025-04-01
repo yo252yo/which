@@ -1,6 +1,20 @@
 
-* Discord: put higher on website, prepare
 * sfx on found, mb vfx too?
+
+* rewrite the ending:
+New gameplay : paint everyone the same color while trying to find the boundaries of your interaction
+p26/27/28
+You noticed that everything was affected by the ramifications of your actions. You began to reconsider the boundary between what you can influence and not
+Something about there being a multitude in you?
+
+I dont like p30, 
+There wasnt a part of this fabric that you didnt influence or get influenced by
+
+* P33 ending appears too fast (mb just on web) so you get the unlock ending in p33
+
+* Back on p1 after ending should go to last page 
+
+
 
 
 # SPRITE WORK

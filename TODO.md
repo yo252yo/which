@@ -14,6 +14,7 @@ There wasnt a part of this fabric that you didnt influence or get influenced by
 
 * Back on p1 after ending should go to last page 
 
+* icon to reload the page
 
 
 

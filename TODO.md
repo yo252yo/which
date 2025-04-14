@@ -16,6 +16,10 @@ There wasnt a part of this fabric that you didnt influence or get influenced by
 
 * icon to reload the page
 
+* still loading error:
+Uncaught TypeError: PLAYER_FIGURE.sprite is null
+    checkColor https://yo252yo.com/which/game.js:32
+    <anonymous> https://yo252yo.com/which/game.js:645
 
 
 # SPRITE WORK

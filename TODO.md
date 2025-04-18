@@ -1,6 +1,9 @@
 
 * sfx on found, mb vfx too?
 
+* Make sure Gameplay chapters reflected in instructions
+*  End gameplay is : catch a fast dot
+
 * rewrite the ending:
 New gameplay : paint everyone the same color while trying to find the boundaries of your interaction
 p26/27/28

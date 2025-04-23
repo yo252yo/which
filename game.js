@@ -37,8 +37,10 @@ window.resetColor = function () {
     localStorage.removeItem('forcedColor');
 
     var tint = generateRGBColor(true);
-    PLAYER_FIGURE.tint = tint;
-    PLAYER_FIGURE.sprite.tint = tint;
+    if (PLAYER_FIGURE) {
+        PLAYER_FIGURE.tint = tint;
+        PLAYER_FIGURE.sprite.tint = tint;
+    }
 }
 
 //HACK ==========================================================================================

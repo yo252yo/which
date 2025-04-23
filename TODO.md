@@ -13,11 +13,6 @@ Something about there being a multitude in you?
 I dont like p30, 
 There wasnt a part of this fabric that you didnt influence or get influenced by
 
-* P33 ending appears too fast (mb just on web) so you get the unlock ending in p33
-
-* Back on p1 after ending should go to last page 
-
-* icon to reload the page
 
 
 

@@ -9,6 +9,8 @@
     <script src="../text.js" defer></script>
     <script>
         window.REQ_WIN = function () {
+            localStorage.setItem("finished", "true");
+            localStorage.setItem("forcedColor", "#FFFFFF");
             go("1");
         }
 
@@ -37,10 +39,6 @@
         où.</div>
     <script src="../pixi.min.js"></script>
     <script src="../endgame.js"></script>
-    <script defer async>
-        localStorage.setItem("finished", "true");
-        localStorage.setItem("forcedColor", "#FFFFFF");
-    </script>
 </body>
 
 </html>

@@ -40,11 +40,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const navDiv = document.createElement("div");
         navDiv.id = "navigation";
 
-        const destination = n > 1 ? (n - 1) : "title";
+        let destination = n > 1 ? (n - 1) : "title";
+        if (destination == "title" && localStorage.getItem("finished")) {
+            destination = LAST_PAGE;
+        }
 
         navDiv.innerHTML = `
             <a href="${destination}.html" style="text-decoration: none;" title="back">⏪</a>
             ${n} / ${LAST_PAGE}
+            <a href="#" onclick="location.reload();" style="text-decoration: none;" title="reload">🔄</a>
             <a href="title.html" style="text-decoration: none;" title="home">🏠</a>
         `;
 

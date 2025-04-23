@@ -1,7 +1,6 @@
 
 * sfx on found, mb vfx too?
 * button to hide/show text for mobile
-* for flockign (p29) make sure that flockers can also convert, and possibly make the flock expand
 * chapter select screen
 P1-10 : Birth
 p11-16: Childhood - hidden object variations (colors, numbers)

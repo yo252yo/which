@@ -373,7 +373,7 @@ class StickFigure {
                     FLOCKS[figure.flock].push(figure);
                 } else if (figure.flock != PLAYER_FIGURE.flock) {
                     var PROBA_FLOCK_MERGE = 0.0001;
-                    if (this.isPlayerControlled) {
+                    if (this.isPlayerControlled || this.flock == PLAYER_FIGURE.flock) {
                         PROBA_FLOCK_MERGE += window.OPT_PLAYER_EXTRA_FLOCK_MERGE;
                     }
 

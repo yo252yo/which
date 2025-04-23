@@ -31,8 +31,10 @@ window.checkColor = function () {
 
     if (PLAYER_FIGURE && PLAYER_FIGURE.tint != window.OPT_PLAYER_TINT) {
         PLAYER_FIGURE.tint = window.OPT_PLAYER_TINT;
+        if (PLAYER_FIGURE.sprite) {
         PLAYER_FIGURE.sprite.tint = window.OPT_PLAYER_TINT;
     }
+}
 }
 
 window.resetColor = function () {
@@ -41,8 +43,10 @@ window.resetColor = function () {
     var tint = generateRGBColor(true);
     if (PLAYER_FIGURE) {
         PLAYER_FIGURE.tint = tint;
+        if (PLAYER_FIGURE.sprite) {
         PLAYER_FIGURE.sprite.tint = tint;
     }
+}
 }
 
 //HACK ==========================================================================================

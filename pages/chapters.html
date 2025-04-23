@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Which is I</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        a {
+            font-weight: bold;
+        }
+
+        .settings {
+            font-size: small;
+            margin-bottom: 0px;
+            padding: 0px;
+        }
+
+        p {
+            background-color: rgba(256, 256, 256, 0.4);
+            border-radius: 3px;
+            padding: 3px;
+            margin-top: 0px;
+            margin-bottom: 10px;
+            width: fit-content;
+            padding: 5px;
+        }
+
+        @media screen and (max-height: 750px) {
+            body {
+                overflow-y: scroll;
+            }
+        }
+    </style>
+    <script src="../text.js"></script>
+    <script>
+        window.REQ_WIN = function () { }
+
+        window.OPT_NO_INPUT = true;
+        window.OPT_DESIRED_DECOYS = 30;
+        window.OPT_BACKGROUND_COLOR = 0xFFFFFF;
+        window.OPT_CHAR_ALPHA = 0.2;
+        window.OPT_BLUR = 3;
+        window.OPT_CHAR_SCALE = 3;
+
+        window.OPT_CHAR_SPEED_MOD = 0.6;
+        window.OPT_ANIM_SPEED_MOD = 0.5;
+    </script>
+</head>
+
+<body>
+    <div id="container" style="left:50px;top:50px;display:block;position:absolute;">
+    </div>
+    <script>
+
+        let CHAPTERS = {};
+        if (lang == "fr") {
+            CHAPTERS = {
+                1: `(re)Naissance <i style='font-size:small'>- découvres ton "moi"</i>`,
+                11: `Enfance <i style='font-size:small'>- trouves ton "moi"</i>`,
+                17: `Adolescence <i style='font-size:small'>- collecte ton "moi"</i>`,
+                23: `Adulte <i style='font-size:small'>- étends ton "moi"</i>`,
+                30: `Dissolution <i style='font-size:small'>- attrape ton "moi"</i>`
+            };
+        } else {
+            CHAPTERS = {
+                1: `(re)Birth <i style='font-size:small'>- discover your "self"</i>`,
+                11: `Childhood <i style='font-size:small'>- find your "self"</i>`,
+                17: `Teenagehood <i style='font-size:small'>- collect your "self"</i>`,
+                23: `Adulthood <i style='font-size:small'>- expand your "self"</i>`,
+                30: `Dissolution <i style='font-size:small'>- catch your "self"</i>`
+            };
+        }
+
+
+        const chapterStartPages = Object.keys(CHAPTERS).map(Number).sort((a, b) => a - b);
+
+        function getChapterForPage(page) {
+            for (let i = chapterStartPages.length - 1; i >= 0; i--) {
+                if (page >= chapterStartPages[i]) {
+                    return chapterStartPages[i];
+                }
+            }
+            return null; // Should not happen if chapters are properly set up
+        }
+
+
+        function populateContainer() {
+            const container = document.getElementById('container');
+
+            // Clear container
+            container.innerHTML = '';
+
+            // Variables to track chapter changes
+            let currentChapter = null;
+            let currentParagraph = null;
+
+            // Loop through each page
+            for (let page = 1; page <= LAST_PAGE; page++) {
+                const pageChapter = getChapterForPage(page);
+
+                // If we're starting a new chapter or it's the first page
+                if (pageChapter !== currentChapter) {
+                    currentChapter = pageChapter;
+
+                    // Add chapter heading
+                    const chapterHeading = document.createElement('p');
+                    chapterHeading.innerHTML = CHAPTERS[currentChapter];
+                    container.appendChild(chapterHeading);
+
+                    // Create new paragraph for this chapter's links
+                    currentParagraph = document.createElement('p');
+                    container.appendChild(currentParagraph);
+                }
+
+                // Create link for this page
+                const link = document.createElement('a');
+                link.href = `${page}.html`;
+                link.textContent = page;
+
+                // Add the link to the current paragraph
+                currentParagraph.appendChild(link);
+
+                // Add a space between links for readability
+                if (page < LAST_PAGE) {
+                    currentParagraph.appendChild(document.createTextNode(' '));
+                }
+            }
+        }
+
+        populateContainer();
+    </script>
+
+    <script src="../pixi.min.js"></script>
+    <script src="../game.js"></script>
+</body>
+
+</html>

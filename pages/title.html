@@ -47,7 +47,7 @@
         window.OPT_CHAR_SPEED_MOD = 0.6;
         window.OPT_ANIM_SPEED_MOD = 0.5;
 
-        var LANG = "kr";// localStorage.getItem("LANG") || navigator.language.slice(0, 2) || "en";
+        var LANG = "en";// localStorage.getItem("LANG") || navigator.language.slice(0, 2) || "en";
 
         function start(page) {
             if (!page) {
@@ -56,8 +56,7 @@
             location.href = page + ".html?lang=" + LANG;
         }
         function jump() {
-            var p = prompt("Page?");
-            start(p);
+            location.href = "chapters.html?lang=" + LANG;
         }
     </script>
 </head>
@@ -165,7 +164,7 @@
                 setText("title", "Cherches Toi");
                 setText("start", "> Commencer");
                 setText("continueText", "> Continuer");
-                setText("jumpPage", "> Aller à une page");
+                setText("jumpPage", "> Séléction des chapitres");
                 setText("musicvol", "Volume musique");
                 setText("cheatLabel", "Mode narratif (surligne la cible)");
                 setText("epilepsyLabel", "⚠️ La fin du jeu contient des particules colorées et rapides pouvant présenter un risque pour les personnes épileptiques ou sensibles. Cette option réduit l’intensité de l’animation pour une expérience plus sûre.");
@@ -178,7 +177,7 @@
                 setText("title", "Find Your Self");
                 setText("start", "> Start");
                 setText("continueText", "> Continue");
-                setText("jumpPage", "> Jump to a page");
+                setText("jumpPage", "> Chapter select");
                 setText("musicvol", "Music volume");
                 setText("cheatLabel", "Narrative mode (highlights target)");
                 setText("epilepsyLabel", "⚠️ The game's ending features fast colorful particles that may pose a risk to individuals with epilepsy or similar sensitivity. Enabling this setting reduces animation intensity for a safer experience.");

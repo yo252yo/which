@@ -1,12 +1,6 @@
 
 * sfx on found, mb vfx too?
 * button to hide/show text for mobile
-* chapter select screen
-P1-10 : Birth
-p11-16: Childhood - hidden object variations (colors, numbers)
-P17-22: Teenagehood - Pacman
-P23-29: Adulthood - crowd coloring
-P30-34: Enlightenement - catch the dot
 
 
 

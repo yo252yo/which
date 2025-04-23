@@ -1,6 +1,5 @@
 
 * sfx on found, mb vfx too?
-* button to hide/show text for mobile
 
 
 

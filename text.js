@@ -81,5 +81,43 @@ document.addEventListener("DOMContentLoaded", function () {
                 this.classList.add("lockedColor");
             });
         }
+
+
+        const mobileHelpDiv = document.createElement('div');
+
+        function toggle() {
+            var elements = document.getElementsByClassName(lang);
+            for (var e of elements) {
+                e.style.visibility = TEXT_HIDDEN ? "visible" : "hidden";
+            }
+            TEXT_HIDDEN = !TEXT_HIDDEN;
+
+            if (lang == "fr") {
+                mobileHelpDiv.textContent = (TEXT_HIDDEN ? "MONTRE" : "CACHE") + ' TEXTE';
+            } else {
+                mobileHelpDiv.textContent = (TEXT_HIDDEN ? "SHOW" : "HIDE") + ' TEXT';
+            }
+        }
+
+
+        mobileHelpDiv.id = 'mobile_help';
+
+        // Check screen height
+        if (window.innerHeight <= 750) {
+            mobileHelpDiv.style.display = 'block';
+        } else {
+            mobileHelpDiv.style.display = 'none';
+        }
+
+        // Append it to the DOM
+        document.body.appendChild(mobileHelpDiv);
+        mobileHelpDiv.addEventListener("mousedown", toggle);
+        mobileHelpDiv.addEventListener("touchstart", toggle);
+
+        TEXT_HIDDEN = true;
+        toggle();
+
+
+
     }
 });

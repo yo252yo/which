@@ -32,9 +32,9 @@ window.checkColor = function () {
     if (PLAYER_FIGURE && PLAYER_FIGURE.tint != window.OPT_PLAYER_TINT) {
         PLAYER_FIGURE.tint = window.OPT_PLAYER_TINT;
         if (PLAYER_FIGURE.sprite) {
-        PLAYER_FIGURE.sprite.tint = window.OPT_PLAYER_TINT;
+            PLAYER_FIGURE.sprite.tint = window.OPT_PLAYER_TINT;
+        }
     }
-}
 }
 
 window.resetColor = function () {
@@ -44,9 +44,9 @@ window.resetColor = function () {
     if (PLAYER_FIGURE) {
         PLAYER_FIGURE.tint = tint;
         if (PLAYER_FIGURE.sprite) {
-        PLAYER_FIGURE.sprite.tint = tint;
+            PLAYER_FIGURE.sprite.tint = tint;
+        }
     }
-}
 }
 
 //HACK ==========================================================================================
@@ -528,11 +528,10 @@ class StickFigure {
         this.sprite.eventMode = 'static';
         this.sprite.on('pointerdown', () => {
             if (!window.OPT_REQUIRED_APPLES) {
+                return window.REQ_WIN();
+            }
+            if (this.eaten_apples.length >= window.OPT_REQUIRED_APPLES) {
                 window.REQ_WIN();
-            } else {
-                if (this.eaten_apples.length >= window.OPT_REQUIRED_APPLES) {
-                    window.REQ_WIN();
-                }
             }
         });
     }
@@ -540,10 +539,31 @@ class StickFigure {
     setFlockingWinCondition() {
         this.sprite.eventMode = 'static';
         this.sprite.on('pointerdown', () => {
-            if (this.isPlayerControlled || window.OPT_ENDING_EASY_WIN) {
-                window.REQ_WIN();
-            } else if (this.flock == PLAYER_FIGURE.flock) {
-                window.REQ_WIN();
+            if (window.OPT_ENDING_EASY_WIN) {
+                return window.REQ_WIN();
+            }
+
+            if (this.isPlayerControlled || this.flock == PLAYER_FIGURE.flock) {
+                if (!window.OPT_FLOCK_SIZE_CONDITION) {
+                    return window.REQ_WIN();
+                }
+
+                if (!(PLAYER_FIGURE.flock in FLOCKS)) {
+                    return; // we dont have flock and theres a flock condition
+                }
+
+                if (window.OPT_FLOCK_SIZE_CONDITION >= 1) { // integer condition
+                    // strict inequality because the player is in the flock
+                    if (FLOCKS[PLAYER_FIGURE.flock].length > window.OPT_FLOCK_SIZE_CONDITION) {
+                        window.REQ_WIN();
+                    }
+                } else {
+                    const fraction = FLOCKS[PLAYER_FIGURE.flock].length / ALL_FIGURES.length;
+                    console.log(fraction);
+                    if (fraction > window.OPT_FLOCK_SIZE_CONDITION) {
+                        window.REQ_WIN();
+                    }
+                }
             }
         });
     }

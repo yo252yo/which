@@ -1,4 +1,4 @@
-const LAST_PAGE = 33;
+const LAST_PAGE = 34;
 
 document.addEventListener("DOMContentLoaded", function () {
     const params = window.location.search; // Get current URL query parameters

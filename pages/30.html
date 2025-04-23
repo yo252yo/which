@@ -12,31 +12,28 @@
             go("31");
         }
 
-
         const ENDGAME_CONFIG = {
-            particleCount: 1000,
-            backgroundColor: 0x999999,
-            moveSpeed: 4,
-            blurForce: 6,
+            particleCount: 600,
+            backgroundColor: 0x666666,
+            moveSpeed: 3,
+            blurForce: 4,
             directionChangeProbability: 0.01,
-            keyForceFraction: 0.6,
+            keyForceFraction: 0.4,
             particleSize: 8,
-            particleAlpha: 0.6
+            particleAlpha: 0.7
         };
     </script>
 </head>
 
 <body>
-    <div class="en lighttext txt">After all, seen from far enough, all there is is a myriad of colorful dots, all unique
-        and arbitrary, on the vast tapestry of all experiences.</div>
-    <div class="fr lighttext txt">Après tout, avec un point de vue assez large, tout n'est qu'une myriade de points
-        colorés, tous aussi uniques qu'arbitraire, dansant sur la large tapisserie de la vie.</div>
-    <div class="en lighttext instructions">Click on any "SELF" in your group to progress. If your group is wide enough,
-        click on
-        any "SELF".</div>
-    <div class="fr lighttext instructions">Clique sur un "MOI" de ton groupe pour progresser. Si ton groupe est
-        suffisament vaste,
-        clique sur n'importe quel "MOI".</div>
+    <div class="en lighttext txt">Pretty soon, you came to realize that there was no part of the world that you didn't
+        influence and get influenced by in return.</div>
+    <div class="fr lighttext txt">Bientôt, tu réalisas qu'il n'y avait rien au monde qui échappait à ton influence, ni
+        qui ne t'influençait en retour.</div>
+
+    <div class="en lighttext instructions">Click on any "SELF" that influenced you to progress.</div>
+    <div class="fr lighttext instructions">Clique sur un "MOI" qui t'a influencé pour progresser.</div>
+
     <script src="../pixi.min.js"></script>
     <script src="../endgame.js"></script>
 </body>

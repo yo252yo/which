@@ -12,31 +12,33 @@
             go("30");
         }
 
-        const ENDGAME_CONFIG = {
-            particleCount: 600,
-            backgroundColor: 0x666666,
-            moveSpeed: 2.5,
-            blurForce: 4,
-            directionChangeProbability: 0.01,
-            keyForceFraction: 0.4,
-            particleSize: 8,
-            particleAlpha: 0.7
-        };
+        window.OPT_DESIRED_DECOYS = 300;
+        window.OPT_BACKGROUND_COLOR = 0x5A5A5A;
+        window.OPT_CHAR_SCALE = 0.45;
+        window.OPT_CHAR_ALPHA = 0.45;
+        window.OPT_BLUR = 2;
+        window.OPT_CHAR_SPEED_MOD = 2.5;
+        window.OPT_ANIM_SPEED_MOD = 2.0;
+        window.OPT_PLAYER_EXTRA_FLOCK_MERGE = 1.0;
 
+        window.OPT_FLOCKING = true;
+        window.OPT_PLAYER_FLOCKING = true;
+        window.OPT_FLOCK_SIZE_CONDITION = .4;
     </script>
 </head>
 
 <body>
-    <div class="en lighttext txt">"Why am I one instead of many?"</div>
-    <div class="fr lighttext txt">"Pourquoi suis-je un plutôt que plusieurs?"</div>
-    <div class="en lighttext instructions">Click on any "SELF" in your group to progress. If your group is wide enough,
-        click on
-        any "SELF".</div>
-    <div class="fr lighttext instructions">Clique sur un "MOI" de ton groupe pour progresser. Si ton groupe est
-        suffisament vaste,
-        clique sur n'importe quel "MOI".</div>
+    <div class="en lighttext txt">"Where does my "self" end? Does it end?"</div>
+    <div class="fr lighttext txt">"Où s'arrête mon moi? S'arrête-t'il?"</div>
+
+    <div class="en darktext instructions">Be influenced by most of the Others and click on any "SELF" in your network to
+        progress.
+    </div>
+    <div class="fr darktext instructions">Interagis avec la plupart des Autres et clique sur un "MOI" de ton réseau pour
+        progresser.
+    </div>
     <script src="../pixi.min.js"></script>
-    <script src="../endgame.js"></script>
+    <script src="../game.js"></script>
 </body>
 
 </html>

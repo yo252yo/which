@@ -15,6 +15,8 @@ let NUM_DECOYS = Math.ceil((window.OPT_DESIRED_DECOYS || 0) * Math.sqrt(SCREEN_S
 let NUM_APPLES = Math.ceil((window.OPT_DESIRED_APPLES || 0) * Math.sqrt(SCREEN_SIZE_ADJUST));
 let APPLES = window.OPT_POSSIBLE_APPLES || ['🍎'];
 
+let LOAD_TIME = Date.now();
+
 if (window.OPT_FIXED_DECOY) {
     NUM_DECOYS = OPT_FIXED_DECOY;
 }
@@ -389,6 +391,9 @@ class StickFigure {
     handleFlocking() {
         if (!window.OPT_FLOCKING) {
             return;
+        }
+        if (Date.now() - LOAD_TIME < 2 * 1000) {
+            return; // small cooldown
         }
         const FLOCK_COOLDOWN_AFTER_LEAVING = 100;
         if (this.flock_cooldown) {

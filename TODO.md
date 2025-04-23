@@ -1,8 +1,7 @@
 
 * sfx on found, mb vfx too?
 
-* Make sure Gameplay chapters reflected in instructions
-*  End gameplay is : catch a fast dot
+* End gameplay is : catch a fast dot
 
 * rewrite the ending:
 New gameplay : paint everyone the same color while trying to find the boundaries of your interaction
@@ -14,6 +13,21 @@ I dont like p30,
 There wasnt a part of this fabric that you didnt influence or get influenced by
 
 
+p24-25 are redundant
+
+27 ok <painting game prompt?>
+28 ok <painting game prompt?>
+<< space for painting game
+29 << should either be in previous gameplay phase or in next gameplay phase but the "seen from far enough" is the queue for final sequence
+
+
+# GAMEPLAY
+Should I have a level select page with this chaptering?
+P1-10 : Birth
+p11-16: Childhood - hidden object variations (colors, numbers)
+P17-22: Teenagehood - Pacman
+P23-28: Adulthood - crowd coloring
+P29-33: Enlightenement - catch
 
 
 # SPRITE WORK

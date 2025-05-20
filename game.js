@@ -69,6 +69,7 @@ window.addEventListener('resize', () => {
 
 //HACK ==========================================================================================
 //HACK ===== INPUT
+let lastTouchDirection = 0;
 const ORIGINAL_SPEED = CHARACTERS_SPEED;
 if (!window.OPT_NO_INPUT) {
     const keys = {};
@@ -136,10 +137,11 @@ if (!window.OPT_NO_INPUT) {
                 // Vertical movement is primary
                 PLAYER_FIGURE.setPlayerDirection(dy > 0 ? 0 : 3); // Down or Up
             }
+            lastTouchDirection = Date.now();
         }
     }
 
-    function handleTouchEnd() {
+    function handleTouchEnd(event) {
         isTouching = false;
     }
 
@@ -527,6 +529,9 @@ class StickFigure {
         }
         this.sprite.eventMode = 'static';
         this.sprite.on('pointerdown', () => {
+            if (lastTouchDirection && (Date.now() - lastTouchDirection) < 500) {
+                return;
+            }
             if (!window.OPT_REQUIRED_APPLES) {
                 return window.REQ_WIN();
             }

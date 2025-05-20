@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const mobileHelpDiv = document.createElement('div');
 
-        function toggle() {
+        function toggle(event) {
             var elements = document.getElementsByClassName(lang);
             for (var e of elements) {
                 e.style.visibility = TEXT_HIDDEN ? "visible" : "hidden";
@@ -97,13 +97,17 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 mobileHelpDiv.textContent = (TEXT_HIDDEN ? "SHOW" : "HIDE") + ' TEXT';
             }
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
         }
 
 
         mobileHelpDiv.id = 'mobile_help';
 
         // Check screen height
-        if (window.innerHeight <= 750) {
+        if (window.innerWidth <= 750) {
             mobileHelpDiv.style.display = 'block';
         } else {
             mobileHelpDiv.style.display = 'none';

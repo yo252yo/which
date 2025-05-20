@@ -3,7 +3,6 @@
 * Tuto with small group
 * Prevent click during swipe
 * Perf issues at the end
-* Add some extra emoji to most emoji lvls 
 * First ending page is weirdly slow and stuttering
 * Ending particle are super slow on edge 
 

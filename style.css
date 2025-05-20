@@ -54,7 +54,7 @@ div {
 
 #apple_counter {
     position: fixed;
-    bottom: 15px;
+    bottom: 30px;
     left: 5px;
     height: 28px;
     font-size: x-large;
@@ -76,7 +76,7 @@ div {
 .instructions {
     font-variant: small-caps;
     font-style: italic;
-    bottom: 60px;
+    bottom: 80px;
     pointer-events: none;
 }
 
@@ -126,7 +126,7 @@ div {
 
 #mobile_help {
     position: fixed;
-    bottom: 10px;
+    bottom: 30px;
     right: 0px;
     width: 150px;
     height: 25px;

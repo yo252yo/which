@@ -390,6 +390,14 @@ class StickFigure {
                         delete FLOCKS[figure.flock];
                     }
                 }
+
+                if (localStorage.getItem("forcedColor") && (this.isPlayerControlled || figure.isPlayerControlled)) {
+                    let color = parseInt(localStorage.getItem("forcedColor").substring(1), 16);
+                    for (var f of FLOCKS[PLAYER_FIGURE.flock]) {
+                        f.tint = color;
+                    }
+                }
+
             }
         });
     }

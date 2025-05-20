@@ -1,16 +1,15 @@
 
-* sfx on found, mb vfx too?
 * Tuto with small group
-* Prevent click during swipe
+
 * Perf issues at the end
 * First ending page is weirdly slow and stuttering
 * Ending particle are super slow on edge 
 
+* SPRITE WORK
+    * proper sprite
+    * thicker outline
 
-
-# SPRITE WORK
-* proper sprite
-* thicker outline
+* color picker in flocking levels
 
 # GAMEPLAY IDEAS
 Mb click at the right time, when the object is close by 

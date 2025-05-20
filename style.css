@@ -116,6 +116,14 @@ div {
     /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 
+@font-face {
+    font-family: 'Twemoji Mozilla';
+    src: url('twemoji.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 #mobile_help {
     position: fixed;
     bottom: 0px;

@@ -692,7 +692,7 @@ app.ticker.add(() => {
 
 function spawnApples(count) {
     for (let i = 0; i < count; i++) {
-        const apple = new PIXI.Text(APPLES[Math.floor(Math.random() * APPLES.length)], { fontSize: 36 });
+        const apple = new PIXI.Text(APPLES[Math.floor(Math.random() * APPLES.length)], { fontFamily: 'Twemoji Mozilla', fontSize: 36 });
         apple.style.fill = 0xFFFFFF;
         apple.x = Math.random() * (app.screen.width - apple.width);
         apple.y = Math.random() * (app.screen.height - apple.height);
@@ -712,7 +712,9 @@ function spawnApples(count) {
     }
 }
 
-spawnApples(NUM_APPLES);
+setTimeout(function () {
+    spawnApples(NUM_APPLES)
+}, 50); // timer in hope it helps emojis load
 
 if (NUM_APPLES) {
     var lastFlip = 0;

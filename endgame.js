@@ -1,6 +1,8 @@
 // Colorful Random Dots Animation using PIXI.js
 // This version is optimized for performance with many particles
 
+const GUARANTEED_PLAYER_PARTICULES = 15;
+
 // Create a PIXI Application
 const app = new PIXI.Application({
     width: window.innerWidth,
@@ -112,7 +114,7 @@ function init() {
                 particle.x = Math.max(0, Math.min(centerX + varX, regionX + regionWidth));
                 particle.y = Math.max(0, Math.min(centerY + varY, regionY + regionHeight));
                 // Random color
-                particle.tint = tint;
+                particle.tint = Math.random() * 0xFFFFFF;// tint; // this is changed to give the illusion of chaos at the beginning
                 // Set alpha
                 particle.alpha = ENDGAME_CONFIG.particleAlpha;
                 // Store extra data
@@ -133,7 +135,11 @@ function init() {
                 flock_size--;
                 if (flock_size <= 0) {
                     flock_index++;
-                    flock_size = Math.ceil(Math.random() * 12);
+                    if (Math.random() < .6) { // big flock
+                        flock_size = 5 + Math.ceil(Math.random() * 7);
+                    } else { // small flock
+                        flock_size = 2 + Math.floor(Math.random() * 2);
+                    }
                     FLOCKS[flock_index] = [];
                     dirIndex = Math.floor(Math.random() * 4);
                     tint = Math.random() * 0xFFFFFF;
@@ -155,10 +161,7 @@ function updateParticles(delta) {
 
         // Random direction change
         if (Math.random() < ENDGAME_CONFIG.directionChangeProbability / FLOCKS[p.flock].length) {
-            p.direction = Math.floor(Math.random() * 4);
-            for (var e of FLOCKS[p.flock]) {
-                e.direction = p.direction;
-            }
+            changeFlockDirection(p, Math.floor(Math.random() * 4));
         }
 
         const dir = DIRECTIONS[p.direction];
@@ -216,15 +219,31 @@ window.addEventListener('keydown', (e) => {
 });
 
 
-function applyDirection(dirIndex) {
-    const forcedCount = Math.floor(particles.length * ENDGAME_CONFIG.keyForceFraction);
-
-    for (let i = 0; i < 3; i++) {
-        particles[i].direction = dirIndex;
+function changeFlockDirection(particule, direction) {
+    for (var e of FLOCKS[particule.flock]) {
+        e.direction = direction;
+        e.tint = particule.tint;
     }
-    for (let i = 3; i < forcedCount; i++) {
+    return FLOCKS[particule.flock].length;
+}
+
+function applyDirection(dirIndex) {
+    let forcedCount = Math.floor(particles.length * ENDGAME_CONFIG.keyForceFraction);
+
+    const fc = localStorage.getItem("forcedColor");
+
+    for (let i = 0; i < GUARANTEED_PLAYER_PARTICULES; i++) {
+        if (fc) {
+            particles[i].tint = fc;
+        }
+        changeFlockDirection(particles[i], dirIndex);;
+    }
+    for (let i = GUARANTEED_PLAYER_PARTICULES; i < forcedCount; i++) {
         const index = Math.floor(Math.random() * particles.length);
-        particles[index].direction = dirIndex;
+        if (fc && Math.random() < 0.2) {
+            particles[index].tint = fc;
+        }
+        i += changeFlockDirection(particles[index], dirIndex);
     }
 }
 
@@ -286,3 +305,14 @@ window.addEventListener('mouseup', handleTouchEnd);
 window.addEventListener('touchstart', handleTouchStart);
 window.addEventListener('touchmove', handleTouchMove);
 window.addEventListener('touchend', handleTouchEnd);
+
+
+window.resetColor = function () {
+    localStorage.removeItem('forcedColor');
+
+    for (var p of particles) {
+        p.tint = Math.random() * 0xFFFFFF;
+    }
+}
+
+window.checkColor = function () { }

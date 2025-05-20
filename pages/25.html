@@ -12,12 +12,14 @@
             go("26");
         }
 
-        window.OPT_DESIRED_DECOYS = 175;
+        window.OPT_DESIRED_DECOYS = 20;
         window.OPT_BACKGROUND_COLOR = 0x1A1A1A;
         window.OPT_CHAR_SCALE = 0.7;
-        window.OPT_CHAR_ALPHA = 0.6;
-        window.OPT_BLUR = 0.1;
+        window.OPT_CHAR_ALPHA = 0.9;
+        window.OPT_BLUR = 0.05;
+        window.OPT_PLAYER_EXTRA_FLOCK_MERGE = 1.0;
 
+        window.OPT_FLOCK_SIZE_CONDITION = 1;
         window.OPT_FLOCKING = true;
         window.OPT_PLAYER_FLOCKING = true;
     </script>
@@ -28,10 +30,12 @@
         return.</div>
     <div class="fr darktext txt">Tu compris que toi aussi, tu interragissais, influençant les autres et recevant leurs
         influences en retour.</div>
-    <div class="en darktext instructions">Click on any "SELF" in your network to progress. Your network may overpower
-        you and change direction.</div>
-    <div class="fr darktext instructions">Clique sur un "MOI" de ton réseau pour progresser. Ton réseau peut t'entraîner
-        dans des directions imprévues.</div>
+    <div class="en darktext instructions">Be influenced by 1 Other and click on any "SELF" in your network
+        to progress. Your network may overpower you and change direction.
+    </div>
+    <div class="fr darktext instructions">Interagis avec 1 Autre et clique sur un "MOI" de ton réseau pour progresser.
+        Ton réseau peut t'entraîner dans des directions imprévues.
+    </div>
     <script src="../pixi.min.js"></script>
     <script src="../game.js"></script>
 </body>

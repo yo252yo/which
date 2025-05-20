@@ -12,11 +12,12 @@
             go("27");
         }
 
-        window.OPT_DESIRED_DECOYS = 200;
+        window.OPT_DESIRED_DECOYS = 80;
         window.OPT_BACKGROUND_COLOR = 0x2A2A2A;
         window.OPT_CHAR_SCALE = 0.6;
-        window.OPT_CHAR_ALPHA = 0.55;
-        window.OPT_BLUR = .5;
+        window.OPT_CHAR_ALPHA = 0.7;
+        window.OPT_BLUR = .1;
+        window.OPT_PLAYER_EXTRA_FLOCK_MERGE = 0.2;
 
         window.OPT_PLAYER_EXTRA_FLOCK_MERGE = 0.005;
         window.OPT_FLOCKING = true;
@@ -31,9 +32,10 @@
     <div class="fr darktext txt">Tu te retrouvas à influencer des choses bien au delà de la grosse ligne épaisse que tu
         avais dessinée. Cette frontière était plus poreuse et floue que tu ne l'avais cru.</div>
     <div class="en darktext instructions">Be influenced by 2 Others and click on any "SELF" in your network
-        to progress.
+        to progress. Your network may overpower you and change direction.
     </div>
     <div class="fr darktext instructions">Interagis avec 2 Autres et clique sur un "MOI" de ton réseau pour progresser.
+        Ton réseau peut t'entraîner dans des directions imprévues.
     </div>
     <script src="../pixi.min.js"></script>
     <script src="../game.js"></script>

@@ -1,5 +1,6 @@
 
-* Tuto with small group
+On my surface, p 26 27 28 29 have stutter
+>> window.OPT_BLUR main culprit, hardcode the blurriness for the final few pages
 
 * Perf issues at the end
 * First ending page is weirdly slow and stuttering
@@ -8,8 +9,6 @@
 * SPRITE WORK
     * proper sprite
     * thicker outline
-
-* color picker in flocking levels
 
 # GAMEPLAY IDEAS
 Mb click at the right time, when the object is close by 

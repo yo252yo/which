@@ -34,6 +34,12 @@ window.checkColor = function () {
         if (PLAYER_FIGURE.sprite) {
             PLAYER_FIGURE.sprite.tint = window.OPT_PLAYER_TINT;
         }
+        if (PLAYER_FIGURE.flock) {
+            for (var f of FLOCKS[PLAYER_FIGURE.flock]) {
+                f.tint = window.OPT_PLAYER_TINT;
+                f.sprite.tint = window.OPT_PLAYER_TINT;
+            }
+        }
     }
 }
 
@@ -395,6 +401,7 @@ class StickFigure {
                     let color = parseInt(localStorage.getItem("forcedColor").substring(1), 16);
                     for (var f of FLOCKS[PLAYER_FIGURE.flock]) {
                         f.tint = color;
+                        f.sprite.tint = color;
                     }
                 }
 

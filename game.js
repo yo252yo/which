@@ -786,7 +786,7 @@ const perfMonitoring = {
             this.history.push(this.fps);
             if (this.history.length > 10) this.history.shift();
 
-            if (this.fps < 45 && ALL_FIGURES.length > 30 && document.visibilityState == "visible") {
+            if (this.fps < 50 && ALL_FIGURES.length > 30 && document.visibilityState == "visible") {
                 const figuresToRemove = Math.floor(ALL_FIGURES.length * 0.1); // Calculate 10% of ALL_FIGURES
                 console.log(`KILLING ${figuresToRemove} / ${ALL_FIGURES.length}`);
 

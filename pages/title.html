@@ -67,7 +67,8 @@
     <div style="left:50px;top:50px;display:block;position:absolute;">
         <p class="settings">
             <a id="toEN">[ENGLISH]</a> -
-            <a id="toFR">[FRANÇAIS]</a>
+            <a id="toFR">[FRANÇAIS]</a> -
+            <a id="toJP">[日本語]</a>
         </p>
 
         <h1 id="title"></h1>
@@ -145,11 +146,18 @@
         document.getElementById("toFR").addEventListener("click", toFR);
         document.getElementById("toFR").addEventListener("touch", toFR);
 
+        document.getElementById("toJP").addEventListener("mouseover", toJP);
+        document.getElementById("toJP").addEventListener("click", toJP);
+        document.getElementById("toJP").addEventListener("touch", toJP);
+
         function toEN() {
             translate("en");
         }
         function toFR() {
             translate("fr");
+        }
+        function toJP() {
+            translate("jp");
         }
 
         function setText(id, text) {
@@ -174,6 +182,19 @@
                 document.getElementById("credits").innerHTML = `
                     Un jeu par <a href="https://www.yo252yo.com" target="_blank">yo252yo</a>,
                     musique par <a href="https://loyaltyfreakmusic.com/" target="_blank">Rrrrrose Azerty</a>
+                    `;
+            } else if (lang == "jp") {
+                setText("title", "🇯🇵Find Your Self");
+                setText("start", "🇯🇵> Start");
+                setText("continueText", "🇯🇵> Continue");
+                setText("jumpPage", "🇯🇵> Chapter select");
+                setText("musicvol", "🇯🇵Music volume");
+                setText("cheatLabel", "🇯🇵Narrative mode (highlights target)");
+                setText("epilepsyLabel", "🇯🇵⚠️ The game's ending features fast colorful particles that may pose a risk to individuals with epilepsy or similar sensitivity. Enabling this setting reduces animation intensity for a safer experience.");
+
+                document.getElementById("credits").innerHTML = `🇯🇵
+                    A game by <a href="https://www.yo252yo.com" target="_blank">yo252yo</a>
+                    with music from <a href="https://loyaltyfreakmusic.com/" target="_blank">Rrrrrose Azerty</a>
                     `;
             } else {//} if (lang == "en") {
                 setText("title", "Find Your Self");

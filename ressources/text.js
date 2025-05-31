@@ -19,7 +19,7 @@ function getQueryParam(name) {
 }
 
 let lang = getQueryParam("lang") || "en";
-if (!(["fr", "en"].includes(lang))) {
+if (!(["fr", "en", "jp"].includes(lang))) {
     lang = "en";
 }
 

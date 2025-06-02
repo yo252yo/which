@@ -41,6 +41,21 @@
             MUSIC_AUDIO.volume = value / 100;
             localStorage.setItem("music_volume", MUSIC_AUDIO.volume);
         }
+
+        function updateTitle() {
+            const lang = localStorage.getItem("LANG");
+            if (lang === "fr") {
+                document.title = "Cherches Toi";
+            } else if (lang === "jp") {
+                document.title = "ジブン探し";
+            } else {
+                document.title = "Find Your Self";
+            }
+            setTimeout(updateTitle, 5000);
+        }
+
+        updateTitle();
+
     </script>
 </head>
 
